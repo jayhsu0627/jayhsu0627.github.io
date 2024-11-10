@@ -1,0 +1,13 @@
+---
+layout: post
+title: Wolverine CARLA in Thunderhill
+date:   2021-05-12 22:20:59 +00:00
+description: Run a vitual Audi TT in Thunderhill racetrack
+image: /images/Wol_Carla.gif
+code: https://github.com/jayhsu0627/Wolverine_CARLA_Thunderhill
+importance: 1
+category: CATARC
+highlight: false
+---
+
+Inspired by Nitin Kapania's Stanford Ph.D. thesis, Coursera's Introduction to Self-Driving Cars, and Charlotte Dorn's Indianapolis waypoint tracking project, this project reimplements Kapania's path generation algorithm. We tested it by running a high-speed virtual Audi TT on the Thunderhill racetrack, using CALAR to simulate an autonomous vehicle.

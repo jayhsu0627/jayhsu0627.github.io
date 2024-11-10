@@ -1,0 +1,16 @@
+---
+layout: post
+title:  "Event Camera 3D Gaussian Splatting"
+date:   2024-06-01 18:08:39 +00:00
+image: /images/drums_splatfacto_big_no_diff.gif
+categories: UMD
+course: CMSC 848B - Computational Imaging
+author: "Shengjie Xu"
+venue: "arXiv"
+arxiv: https://arxiv.org/abs/2406.02972
+paper: /pdfs/CMSC848B_project.pdf
+code: https://github.com/jayhsu0627/Event3DGS
+website: https://arxiv.org/abs/2406.02972
+highlight: true
+---
+This paper, published at CoRL 2024, presents Event3DGS: Event-based 3D Gaussian Splatting for High-Speed Robot Egomotion. Developed as a course project at the University of Maryland, this implementation uses [nerfstudio](https://docs.nerf.studio/) and [EventNeRF](https://github.com/r00tman/EventNeRF) to train 3D Gaussian Splatting for event camera data.

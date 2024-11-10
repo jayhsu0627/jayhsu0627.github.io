@@ -1,0 +1,16 @@
+---
+layout: post
+title:  "A Framework for Generating Dangerous Scenes for Testing Robustness"
+date:   2022-11-23 22:20:59 +00:00
+image: /images/Danger.gif
+categories: research
+author: "Shengjie Xu"
+subtitle: "Invited Workshop Talk"
+venue: "NeurIPS Workshops"
+authors: "<strong>Shengjie Xu</strong>, Lan Mi, Leilani H. Gilpin"
+arxiv: /pdfs/NeurIPS_TEA_Danger.pdf
+code: https://github.com/jayhsu0627/DANGER
+website: https://sites.google.com/view/danger-vkitti/home
+slides: https://neurips.cc/virtual/2022/59954
+---
+Autonomous driving datasets like KITTI, nuScenes, Argoverse, and Waymo are realistic but lack faults or difficult maneuvers. We introduce the DANGER framework, which adds edge-case images to these datasets. DANGER uses photorealistic data from real driving scenarios to manipulate vehicle positions and generate dangerous scenarios. Applied to the virtual KITTI datasets, our experiments show that DANGER can expand current datasets to include realistic and anomalous corner cases.
