@@ -48,3 +48,4 @@ The website design is just a modification of [Jon Barron's website](https://jonb
 * My own posts have lots of extra stuff left over from my old jekyll design ("author", long descriptions, etc.), feel free to ignore them
 * I use thumbnails, so I can upload arbitrary sized images but then only display small ones. The `_make_thumbnails.sh` script generates them and the html template looks in `tn/` for all images. 
 * I have three categories of post with slightly differerent formatting, so changing sizing requires edits in multiple paces. 
+* Template borrowed from [leonidk.github.io](leonidk.github.io).
