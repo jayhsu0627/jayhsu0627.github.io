@@ -1,0 +1,2 @@
+I"Å<p>This paper, published at CoRL 2024, presents Event3DGS: Event-based 3D Gaussian Splatting for High-Speed Robot Egomotion. Developed as a course project at the University of Maryland, this implementation uses <a href="https://docs.nerf.studio/">nerfstudio</a> and <a href="https://github.com/r00tman/EventNeRF">EventNeRF</a> to train 3D Gaussian Splatting for event camera data.</p>
+:ET

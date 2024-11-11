@@ -1,0 +1,15 @@
+---
+layout: post
+title:  "Event-Driven Lighting for Immersive Attention Guidance"
+date:   2024-09-18 22:21:59 +00:00
+image: /images/event_driven.png
+categories: research
+author: "Shengjie Xu"
+# authors: "Alexander Gao, Xijun Wang, Geonsun Lee, Will William Barber Smith Chambers, Niall L. Williams, Yi-Ling Qiao, <strong>Shengjie Xu</strong>, Ming C. Lin"
+venue: "IEEE Virtual Reality (in submission)"
+arxiv:
+code:
+website: 
+highlight: false
+---
+We present an attention-guidance framework that leverages LLMs to detect and localize story events from text scripts, then automatically adjusts NeRF-based lighting to enhance user attention and memory retention in VR experiences.

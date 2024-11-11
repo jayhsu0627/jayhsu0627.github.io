@@ -1,0 +1,2 @@
+I"l<p>Developed a control algorithm using a simple state machine for an infant humanoid, inspired by how babies learn to crawl and walk. The algorithm supports locomotion from crawling to walking stages and was implemented using MuJoCo. Analyzed crawling, a 2D bipedal model, and initial walking from 8 to 18 months, evaluating kinematics and simulation results.</p>
+:ET
