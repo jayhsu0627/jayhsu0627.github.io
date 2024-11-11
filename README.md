@@ -38,6 +38,10 @@ The website design is just a modification of [Jon Barron's website](https://jonb
      ```bash
       bundle exec jekyll serve --port 4001
      ```
+5. **Push and URL**:
+    In Settings > Pages, under Custom domain, enter `yourdomain.com` if it’s not already there. This ensures your site is accessible at your custom domain.
+
+
 
 
 ## issues
