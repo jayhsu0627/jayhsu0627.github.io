@@ -16,7 +16,7 @@ The website design is just a modification of [Jon Barron's website](https://jonb
 
 2. **Set Up Gemfile**:
    - In the project directory, create or update `Gemfile`:
-     ```ruby
+     ```bash
     source "https://rubygems.org"
 
     gem "jekyll", "~> 4.2.0"
