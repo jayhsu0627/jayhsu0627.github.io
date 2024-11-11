@@ -10,34 +10,33 @@ The website design is just a modification of [Jon Barron's website](https://jonb
    - Use Homebrew for version management: `brew install ruby@3.2`
    - Add Ruby 3.2 to your PATH:
      ```bash
-     echo 'export PATH="/opt/homebrew/opt/ruby@3.2/bin:$PATH"' >> ~/.zshrc
-     source ~/.zshrc
+      echo 'export PATH="/opt/homebrew/opt/ruby@3.2/bin:$PATH"' >> ~/.zshrc
+      source ~/.zshrc
      ```
 
 2. **Set Up Gemfile**:
    - In the project directory, create or update `Gemfile`:
      ```bash
-    source "https://rubygems.org"
-
-    gem "jekyll", "~> 4.2.0"
-    gem "webrick", "~> 1.7"  # Needed for Jekyll server
-    gem "csv"                 # Add csv gem
-    gem "base64"              # Add base64 gem
-    gem "bigdecimal"          # Add bigdecimal gem
-    gem "jekyll-sitemap"
+      source "https://rubygems.org"
+      gem "jekyll", "~> 4.2.0"
+      gem "webrick", "~> 1.7"  # Needed for Jekyll server
+      gem "csv"                 # Add csv gem
+      gem "base64"              # Add base64 gem
+      gem "bigdecimal"          # Add bigdecimal gem
+      gem "jekyll-sitemap"
      ```
 
 3. **Install Bundler and Dependencies**:
    - Run:
      ```bash
-     gem install bundler
-     bundle install
+      gem install bundler
+      bundle install
      ```
 
 4. **Serve the Site**:
    - Start Jekyll with:
      ```bash
-     bundle exec jekyll serve --port 4001
+      bundle exec jekyll serve --port 4001
      ```
 
 
