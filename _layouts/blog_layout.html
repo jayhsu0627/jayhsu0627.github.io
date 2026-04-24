@@ -1,0 +1,239 @@
+<!DOCTYPE HTML>
+<html lang="en">
+
+<head>
+  <!-- Google Tag Manager -->
+  <script>(function (w, d, s, l, i) {
+      w[l] = w[l] || []; w[l].push({
+        'gtm.start':
+          new Date().getTime(), event: 'gtm.js'
+      }); var f = d.getElementsByTagName(s)[0],
+        j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src =
+          'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
+    })(window, document, 'script', 'dataLayer', 'GTM-N6BCBBZW');
+  </script>
+  <!-- End Google Tag Manager -->
+
+  <title>{{ site.name }} - Blog</title>
+  <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+  <meta name="author" content="{{ site.name }}" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" type="text/css" href="{{ site.baseurl }}/style.css" />
+  <link rel="canonical" href="{{ page.url | replace:'index.html','' | prepend: site.baseurl | prepend: site.url }}">
+  <link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet"
+    type="text/css">
+  <link rel="icon"
+    href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🍉</text></svg>">
+</head>
+
+<body>
+  <!-- Google Tag Manager (noscript) -->
+  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-N6BCBBZW" height="0" width="0"
+      style="display:none;visibility:hidden"></iframe></noscript>
+
+  <table
+    style="width:100%;max-width:800px;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;">
+    <tr style="padding:0px">
+      <td style="padding:0px">
+        <table
+          style="width:100%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;">
+          <tr style="padding:0px">
+            <td style="padding:2.5%;width:100%;vertical-align:middle;text-align:center">
+              <h2><a href="/" style="text-decoration:none;color:inherit;">Shengjie Xu</a></h2>
+              <p style="text-align:center;font-size:1em;">
+                <a href="/">Home</a> &nbsp;/&nbsp;
+                <a target="_blank" href="https://mailhide.io/e/owBZoTyp">Email</a> &nbsp;/&nbsp;
+                <a
+                  href="https://github.com/jayhsu0627/jayhsu0627.github.io/blob/master/pdfs/2023_Shengjie_CV.pdf">CV</a>
+                &nbsp;/&nbsp;
+                <a href="https://scholar.google.com/citations?user=5fdC4_oAAAAJ">Scholar</a> &nbsp;/&nbsp;
+                <a href="https://www.linkedin.com/in/shengjiexu">LinkedIn</a>&nbsp;/&nbsp;
+                <a href="https://github.com/jayhsu0627">GitHub</a> &nbsp;/&nbsp;
+                <a href="/blog/">Blog</a>
+              </p>
+            </td>
+          </tr>
+        </table>
+
+        <!-- CONTENT SEPARATOR -->
+        <table
+          style="width:100%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;">
+          <tr>
+            <td style="padding:2.5%;width:100%;vertical-align:middle">
+
+              <style>
+                .post-content h1 {
+                  font-size: 2.2em;
+                  margin-bottom: 0.5em;
+                  line-height: 1.2;
+                }
+
+                .post-content h2 {
+                  font-size: 1.6em;
+                  margin-top: 1.5em;
+                  margin-bottom: 0.5em;
+                  border-bottom: 1px solid #eaecef;
+                  padding-bottom: 0.3em;
+                }
+
+                .post-content h3 {
+                  font-size: 1.3em;
+                  margin-top: 1.2em;
+                }
+
+                .post-content p {
+                  line-height: 1.6;
+                  font-size: 1.1em;
+                  margin-bottom: 1.2em;
+                  color: #333;
+                }
+
+                .post-content a {
+                  color: #0366d6;
+                  text-decoration: none;
+                }
+
+                .post-content a:hover {
+                  text-decoration: underline;
+                }
+
+                .post-content blockquote {
+                  padding: 0 1em;
+                  color: #6a737d;
+                  border-left: 0.25em solid #dfe2e5;
+                  margin: 0 0 16px 0;
+                }
+
+                .post-content code {
+                  padding: 0.2em 0.4em;
+                  margin: 0;
+                  font-size: 85%;
+                  background-color: rgba(27, 31, 35, 0.05);
+                  border-radius: 3px;
+                  font-family: ui-monospace, SFMono-Regular, Consolas, "Liberation Mono", Menlo, monospace;
+                }
+
+                .post-content pre {
+                  padding: 16px;
+                  overflow: auto;
+                  font-size: 85%;
+                  line-height: 1.45;
+                  background-color: #f6f8fa;
+                  border-radius: 3px;
+                }
+
+                .post-content pre code {
+                  display: inline;
+                  max-width: auto;
+                  padding: 0;
+                  margin: 0;
+                  overflow: visible;
+                  line-height: inherit;
+                  word-wrap: normal;
+                  background-color: transparent;
+                  border: 0;
+                }
+
+                .post-content img {
+                  max-width: 100%;
+                  height: auto;
+                  box-sizing: content-box;
+                  border-radius: 8px;
+                  margin: 1em 0;
+                }
+
+                .post-meta {
+                  font-size: 0.9em;
+                  color: #666;
+                  margin-bottom: 2em;
+                  display: block;
+                }
+
+                .post-content hr {
+                  height: 0.25em;
+                  padding: 0;
+                  margin: 24px 0;
+                  background-color: #e1e4e8;
+                  border: 0;
+                }
+              </style>
+
+              {% if page.url != '/blog/' %}
+              <h1 style="margin-bottom:0">{{ page.title }}</h1>
+              <span class="post-meta">{{ page.date | date: "%B %d, %Y" }}</span>
+              {% endif %}
+
+              <div class="post-content">
+                {{ content }}
+              </div>
+
+              {% if page.url != '/blog/' %}
+              {% assign all_blogs = "" | split: "" %}
+              {% for p in site.posts %}
+              {% if p.categories contains 'blog' or p.categories == 'blog' %}
+              {% assign all_blogs = all_blogs | push: p %}
+              {% endif %}
+              {% endfor %}
+
+              {% for blog in all_blogs %}
+              {% if blog.url == page.url %}
+              {% assign prev_index = forloop.index0 | plus: 1 %}
+              {% assign next_index = forloop.index0 | minus: 1 %}
+              {% if next_index >= 0 %}
+              {% assign next_blog = all_blogs[next_index] %}
+              {% endif %}
+              {% if prev_index < all_blogs.size %} {% assign prev_blog=all_blogs[prev_index] %} {% endif %} {% endif %}
+                {% endfor %} <div
+                style="display: flex; justify-content: space-between; margin-top: 3em; margin-bottom: 2em; font-size: 1.1em;">
+                <div style="width: 48%;">
+                  {% if prev_blog %}
+                  <a href="{{ prev_blog.url }}" style="color:#0366d6;text-decoration:none;">
+                    <span style="font-size:0.85em;color:#666;display:block;">&larr; Previous</span>
+                    <b>{{ prev_blog.title }}</b>
+                  </a>
+                  {% endif %}
+                </div>
+                <div style="width: 48%; text-align: right;">
+                  {% if next_blog %}
+                  <a href="{{ next_blog.url }}" style="color:#0366d6;text-decoration:none;">
+                    <span style="font-size:0.85em;color:#666;display:block;">Next &rarr;</span>
+                    <b>{{ next_blog.title }}</b>
+                  </a>
+                  {% endif %}
+                </div>
+                </div>
+
+
+                <br><br>
+                <hr>
+                <br>
+                <h3>Comments</h3>
+                <p style="font-size: 0.85em; color: #666;"><em>Note: To enable comments, please install the <a
+                      href="https://utteranc.es/" target="_blank">Utterances GitHub App</a> on your repository.</em></p>
+                <script src="https://utteranc.es/client.js" repo="jayhsu0627/jayhsu0627.github.io" issue-term="pathname"
+                  theme="github-light" crossorigin="anonymous" async>
+                  </script>
+                {% endif %}
+
+            </td>
+          </tr>
+        </table>
+
+        <table
+          style="width:100%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;">
+          <tr>
+            <td style="padding:0px">
+              <br>
+              <p style="text-align:center;font-size:small;">
+                Original design from <a style="font-size:small;" href="https://jonbarron.info">Jon Barron</a>. Blog
+                design inspired by <a style="font-size:small;" href="https://robot-daycare.com/">Benjamin Katz</a>.
+              </p>
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+  </table>
+</body>
+
+</html>

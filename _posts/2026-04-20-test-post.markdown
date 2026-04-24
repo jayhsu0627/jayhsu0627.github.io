@@ -1,0 +1,15 @@
+---
+layout: blog_layout
+title: "A Test Blog Post for Ordering"
+date: 2026-04-20 12:00:00 +00:00
+permalink: /blog/test-post/
+image: /images/prof_pic.png
+categories: blog
+author: "jayhsu"
+highlight: false
+published: false
+---
+
+This is a test blog post published a few days before the Claude Code post. 
+
+Its main purpose is to demonstrate the chronological ordering of the `/blog/` page. You can freely delete this file once you have verified the ordering works!

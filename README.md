@@ -6,13 +6,20 @@ The website design is just a modification of [Jon Barron's website](https://jonb
 
 ### Jekyll Setup Guide (macOS, Windows, Linux)
 
-1. **Install Ruby (macOS)**:
-   - Use Homebrew for version management: `brew install ruby@3.2`
-   - Add Ruby 3.2 to your PATH:
-     ```bash
-      echo 'export PATH="/opt/homebrew/opt/ruby@3.2/bin:$PATH"' >> ~/.zshrc
-      source ~/.zshrc
-     ```
+1. **Install Ruby and Dependencies**:
+   - **macOS**:
+     - Use Homebrew for version management: `brew install ruby@3.2`
+     - Add Ruby 3.2 to your PATH:
+       ```bash
+       echo 'export PATH="/opt/homebrew/opt/ruby@3.2/bin:$PATH"' >> ~/.zshrc
+       source ~/.zshrc
+       ```
+   - **Ubuntu / Linux**:
+     - Install Ruby headers, build tools, and ImageMagick (for thumbnails):
+       ```bash
+       sudo apt update
+       sudo apt install -y ruby-dev build-essential zlib1g-dev imagemagick
+       ```
 
 2. **Set Up Gemfile**:
    - In the project directory, create or update `Gemfile`:
@@ -27,10 +34,11 @@ The website design is just a modification of [Jon Barron's website](https://jonb
      ```
 
 3. **Install Bundler and Dependencies**:
-   - Run:
+   - Configure bundle to use a local path and install:
      ```bash
-      gem install bundler
-      bundle install
+     gem install bundler
+     bundle config set --local path 'vendor/bundle'
+     bundle install
      ```
 
 4. **Serve the Site**:
