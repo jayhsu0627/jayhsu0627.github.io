@@ -1,0 +1,14 @@
+---
+layout: post
+title:  "From Geometry to Causality: How Instruction Exposure Wires Up Latent Rhetorical Directions in LLMs"
+date:   2026-07-08 22:21:59 +00:00
+image: /images/local_llm_claude.png
+categories: research
+author: "Shengjie Xu"
+authors: "<strong>Shengjie Xu</strong>"
+venue: "COLM"
+arxiv: 
+# code: https://github.com/jayhsu0627/SVD_ControlNet_Relight
+website: 
+highlight: true
+---
