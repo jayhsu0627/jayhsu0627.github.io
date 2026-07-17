@@ -7,8 +7,9 @@ categories: research
 author: "Shengjie Xu"
 authors: "<strong>Shengjie Xu</strong>, Alexander Gao, Anshul Rai, Dae Yeol Lee, Guan-Ming Su, Ming C. Lin"
 venue: "IROS"
-arxiv: 
-# code: https://github.com/jayhsu0627/SVD_ControlNet_Relight
-website: 
+arxiv: "#"
+code: "#"
+website: "#"
+emoji: /images/emojis/mikey_ninja-turtle.png
 highlight: false
 ---

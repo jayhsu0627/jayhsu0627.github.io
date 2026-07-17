@@ -7,8 +7,9 @@ categories: research
 author: "Shengjie Xu"
 authors: "<strong>Shengjie Xu</strong>"
 venue: "COLM"
-arxiv: 
-# code: https://github.com/jayhsu0627/SVD_ControlNet_Relight
-website: 
+arxiv: "#"
+code: "#"
+website: "#"
+emoji: /images/emojis/donnie_ninja-turtle.png
 highlight: true
 ---

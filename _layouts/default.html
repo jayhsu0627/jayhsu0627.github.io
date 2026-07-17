@@ -128,6 +128,9 @@
               {% if post.youtube %}
               <a href="{{post.youtube}}">youtube</a> /
               {% endif %}
+              {% if post.emoji %}
+              <img src="{{post.emoji}}" alt="" style="height:1.8em;width:auto;vertical-align:middle;margin-left:0.15em;" />
+              {% endif %}
               <p></p>
               {{ post.excerpt }}
             </td>
