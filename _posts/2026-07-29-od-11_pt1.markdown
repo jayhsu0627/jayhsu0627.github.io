@@ -1,0 +1,48 @@
+---
+layout: blog_layout
+title: "Open-Source Carlsson Box Part-1"
+date: 2026-07-29 00:00:00 +00:00
+permalink: /blog/open_ortho/
+image: /images/local_llm_claude.png
+categories: blog
+author: "jayhsu"
+authors: "<strong>jayhsu</strong>"
+venue: "Personal Blog"
+highlight: true
+published: true
+---
+
+<!-- ![Banner Overview](/images/Gemini_Generated_Image_fbbgrifbbgrifbbg.png) -->
+
+I got tired of constantly renewing my Claude usage limits. I need to save my allowance money.
+Here is what worked, what didn't, and the current optimal setup.
+
+## Why and what is teenage engineering
+I visit YouTube years ago, then I looked into this [OD-11](https://teenage.engineering/products/od-11). Its background with [villa erskine](https://architecture-history.org/architects/architects/ERSKINE/OBJ/1963,%20Erskine%20house,%20Drottningholm,%20Sweden.html) (New Mexico)
+
+$999 each (see the bottom to see my final cost)
+
+## Sonab OD-11
+
+I bought one from eBay and got resources from here. to see the internal structures.
+
+## Choice of woofer and tweeter
+
+Follow Sweden guy's suggestion.
+
+## Choice of DSP
+
+We used Beocreate 4 channel amplifier.
+
+## Long unstoppable design
+
+With SolidWorks.
+
+<iframe
+  src="/tn/OD-11/index.html?v=eyJxIjoicGF0aHRyYWNlciIsIm0iOiJjb3JuZXIiLCJoIjowLCJlIjowLCJjIjpbMi45MDA5LDIuNzA1LC0wLjQ5NDRdLCJ0IjpbLTAuMDU4NywwLjg0MTYsMC4yMDM2XSwicCI6eyJ4IjpbMCwwLjUsMSwxLDEsMCwwXSwieSI6WzAsMC41LDEsMSwxLDAsMF0sInoiOlswLDAuNSwxLDEsMSwwLDBdLCJkMSI6WzAsMC41LDEsMSwxLDAsMF0sImQyIjpbMSwwLjUsMSwxLDEsMCwwXX0sIngiOjEuMTUsImIiOjQsImsiOjMsInMiOjEsInUiOjAuMDV9&embed=1"
+  title="OD-11 path-traced cross-section"
+  style="width:100%;aspect-ratio:16/10;border:0;background:#0c0e12"
+  loading="lazy"
+  allowfullscreen
+></iframe>
+

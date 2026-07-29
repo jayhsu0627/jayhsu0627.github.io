@@ -21,32 +21,22 @@ The website design is just a modification of [Jon Barron's website](https://jonb
        sudo apt install -y ruby-dev build-essential zlib1g-dev imagemagick
        ```
 
-2. **Set Up Gemfile**:
-   - In the project directory, create or update `Gemfile`:
-     ```bash
-      source "https://rubygems.org"
-      gem "jekyll", "~> 4.2.0"
-      gem "webrick", "~> 1.7"  # Needed for Jekyll server
-      gem "csv"                 # Add csv gem
-      gem "base64"              # Add base64 gem
-      gem "bigdecimal"          # Add bigdecimal gem
-      gem "jekyll-sitemap"
-     ```
-
-3. **Install Bundler and Dependencies**:
-   - Configure bundle to use a local path and install:
+2. **Install Bundler and Dependencies**:
+   - The repo already includes a `Gemfile`. From the project directory:
      ```bash
      gem install bundler
      bundle config set --local path 'vendor/bundle'
      bundle install
      ```
 
-4. **Serve the Site**:
+3. **Serve the Site**:
    - Start Jekyll with:
      ```bash
-      bundle exec jekyll serve --port 4001
+     bundle exec jekyll serve --port 4001
      ```
-5. **Push and URL**:
+   - Open http://127.0.0.1:4001
+
+4. **Push and URL**:
     In Settings > Pages, under Custom domain, enter `yourdomain.com` if it’s not already there. This ensures your site is accessible at your custom domain.
 
 

@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>OD-11 · Path Tracer</title>
+  <script>
+    const params = new URLSearchParams(location.search);
+    params.set('quality', 'pathtracer');
+    location.replace('./index.html?' + params.toString() + location.hash);
+  </script>
+</head>
+<body>
+  <p><a href="./index.html?quality=pathtracer">Continue to OD-11 viewer (path traced)</a></p>
+</body>
+</html>
