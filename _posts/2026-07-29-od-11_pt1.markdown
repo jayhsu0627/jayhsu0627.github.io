@@ -12,19 +12,71 @@ highlight: true
 published: true
 ---
 
-<!-- ![Banner Overview](/images/Gemini_Generated_Image_fbbgrifbbgrifbbg.png) -->
+![Banner Overview](/tn/OD-11/PXL_20260731_025643726.MP.jpg)
+## Preface
 
-I got tired of constantly renewing my Claude usage limits. I need to save my allowance money.
-Here is what worked, what didn't, and the current optimal setup.
+The story all started with this shity little boombox, it's a $10 I bought with my wife from Goodwill. The FM and CD player helps us replaying my father-in-law's CD collection gift (in a carry on suitcase). The convienient is good, but sound is really shit. So I start to think of replace those two speakers using parts from Parts Express.
+
+<figure style="margin:1em 0;text-align:center">
+  <img src="/tn/OD-11/PXL_20260731_025552882.jpg" style="margin:0;width:60%" />
+  <figcaption style="margin-top:0.4em;color:#666;font-size:0.95em">Onn ONA16AA005</figcaption>
+</figure>
+
+However, when I digg in more, it's so complicated to manage to make this setup:
+1. either swap the speaker, the box plastic case has little to modified.
+2. or make it a front-end source ( has no analogy output, and so difficult to extract the digital or analog signal from the board), then connect to a good DIY speaker.
+
+Eventually I found this Panasonic SC-PM39D on shopgoodwill.com for $43 include shipping. Features, cassette, CD, DVD, with a Optical Digital Output. 
+
+<figure style="margin:1em 0;text-align:center">
+  <img src="/tn/OD-11/PXL_20260731_025620194.jpg" style="margin:0;width:30%" />
+  <figcaption style="margin-top:0.4em;color:#666;font-size:0.95em">Panasonic SC-PM39D</figcaption>
+</figure>
+
+Now we need a speaker, so I recall the OD-11.
 
 ## Why and what is teenage engineering
-I visit YouTube years ago, then I looked into this [OD-11](https://teenage.engineering/products/od-11). Its background with [villa erskine](https://architecture-history.org/architects/architects/ERSKINE/OBJ/1963,%20Erskine%20house,%20Drottningholm,%20Sweden.html) (New Mexico)
+I remembered this [YouTube video](https://youtu.be/7iFeWRg5w1Y?si=_kAWJ4PnHhFuQbrp) years ago, then I looked into this elegant simplism [OD-11](https://teenage.engineering/products/od-11). Combine with the [villa erskine](https://architecture-history.org/architects/architects/ERSKINE/OBJ/1963,%20Erskine%20house,%20Drottningholm,%20Sweden.html), everything was so perfect and matched the modernism home styling.
+<figure style="margin:1em 0;text-align:center">
+  <img src="https://assets.teenage.engineering/_img/57c69be2d8866f0300aa1a92_2048.jpg"  style="margin:0;width:60%" />
+  <figcaption style="margin-top:0.4em;color:#666;font-size:0.95em">TE OD-11 in  Villa Erskine</figcaption>
+</figure>
 
-$999 each (see the bottom to see my final cost)
+Also reminds me the Georgia O'Keeffe's home in Sante Fe.
+
+<figure style="margin:1em 0;text-align:center">
+  <img src="https://static01.nyt.com/images/2025/04/30/t-magazine/entertainment/30tmag-tlist-slide-X21V/30tmag-tlist-slide-X21V-superJumbo.jpg?quality=75&auto=webp
+"  style="margin:0;width:60%" />
+  <figcaption style="margin-top:0.4em;color:#666;font-size:0.95em">Georgia O'Keeffe's livingroom</figcaption>
+</figure>
+
+This wifi speaker released in 2014, comes with everything we need for modern connectivity, WIFI, bluetooth, Airplay, etc. $999 each ,so techinically $2000 for a pair. Since I'm a broke PhD student, so I want to build one with opensourced parts (see the bottom to see my final cost), namely Open-Source Carlsson Box.
 
 ## Sonab OD-11
+There is bunch of recourses were maintained by [CarlssonPlanet](https://carlssonplanet.com/en/speakers/produced/sonab-od-11/) or Carlsson foundation. The outer looks it's easy to design, but not the internal parts (even we can find some internal structure pictures from [here](https://josefsson.org/od11/) and [there](https://www.carlssonkult.se/OD-11Cloud.aspx/)). There was a pair of TE OD-11 (for parts, ~$500 each) sell on eBay this May, but very little was traded in the US but many are selling on its parent country platform [Blocket](https://www.blocket.se/). Consider the cost and shipment from Sweden, it's still not a good idea to ship them all the way from Sweden.
 
-I bought one from eBay and got resources from here. to see the internal structures.
+Eventually, I was so lucky to found this pair from eBay this June a pair for $260. The disassembled parts helps me a lot in the final design of this opensource project.
+
+<figure style="margin:1em 0;text-align:center">
+  <img src="/tn/OD-11/PXL_20260629_040307488.MP.jpg" style="margin:0;width:60%" />
+  <figcaption style="margin-top:0.4em;color:#666;font-size:0.95em">The condition comes with broken speaker foam, no DIN connector cables and one woofer is literally broken. I found it's just the tinsel braid cable was intermittent connection. (In the same image, you can see my upgraded tweeter and woofer and also Beocreate with its wifi UI) </figcaption>
+</figure>
+
+
+<figure style="margin:1em 0;text-align:center">
+  <img src="/tn/OD-11/PXL_20260731_160953341.jpg" style="margin:0;width:60%" />
+  <figcaption style="margin-top:0.4em;color:#666;font-size:0.95em"> After repair, you can see the woofer being repaired (not good looking), I simply used PVA glue as the method recommended by this [video](https://youtu.be/Qr5pUOTpasY?si=NPw7jZW5E2pahfAx)</figcaption>
+</figure>
+
+The breakdown for this repair (all from Aliexpress):
+
+| Item | Unit | Qty | Total |
+|------|------|-----|-------|
+| 6-inch Foam ring | $3.4 | 2 | $6.8 |
+| 2-pin DIN speaker jack | $1.3 | 2 | $2.5 |
+| 20 AWG Cable 10m | $3.8 | 2 | $7.6 |
+
+(I should really stop from here )
 
 ## Choice of woofer and tweeter
 
@@ -36,7 +88,7 @@ We used Beocreate 4 channel amplifier.
 
 ## Long unstoppable design
 
-With SolidWorks.
+With SolidWorks, took me about two months.
 
 <iframe
   src="/tn/OD-11/index.html?v=eyJxIjoicGF0aHRyYWNlciIsIm0iOiJjb3JuZXIiLCJoIjowLCJlIjowLCJjIjpbMi45MDA5LDIuNzA1LC0wLjQ5NDRdLCJ0IjpbLTAuMDU4NywwLjg0MTYsMC4yMDM2XSwicCI6eyJ4IjpbMCwwLjUsMSwxLDEsMCwwXSwieSI6WzAsMC41LDEsMSwxLDAsMF0sInoiOlswLDAuNSwxLDEsMSwwLDBdLCJkMSI6WzAsMC41LDEsMSwxLDAsMF0sImQyIjpbMSwwLjUsMSwxLDEsMCwwXX0sIngiOjEuMTUsImIiOjQsImsiOjMsInMiOjEsInUiOjAuMDV9&embed=1"
@@ -46,3 +98,31 @@ With SolidWorks.
   allowfullscreen
 ></iframe>
 
+| Item | Unit | Qty | Total |
+|------|------|-----|-------|
+| Beocreate | $199.0 | 2 | $398.00 |
+| Raspberry Pi 4 Model B (4GB) | $75.0 | 2 | $150.00 |
+| Attena | $0.9 | 2 | $1.80 |
+| MicroSD Card (32GB) | $7.5 | 2 | $14.98 |
+| SB Acoustics SB17NRX2C35-4 | $74.1 | 2 | $148.20 |
+| ScanSpeak Discovery D2606/9220 | $60.9 | 2 | $121.80 |
+| Mean Well IRM-90-24ST | $16.8 | 2 | $33.53 |
+| China made 110-24V 2A | $7.5 | 1 | $7.50 |
+| 18 AWG OFC Wire (50ft) | $7.9 | 1 | $7.85 |
+| Toslink Cable (10ft) | $3.9 | 1 | $3.90 |
+| DC Power Jack (Panel Mount) | $3.2 | 1 | $3.23 |
+| 6 Fumed Aspen Wood Veneer 12" × 12" Sheets | $19.99 | 2 | $39.98 |
+| Shop ProWood 1/2 in. × 2 ft. × 4 ft. MDF | $27.48 | 1 | $27.48 |
+| Veneer glue | $18.00 | 1 | $18.00 |
+| C8 110AC socket leadwire | $1.0 | 1 | $0.97 |
+| Sealant | $1.2 | 1 | $1.16 |
+| RJ45 cable | $0.7 | 2 | $1.45 |
+| C7 110AC cable | $2.6 | 2 | $5.13 |
+| SPDIF DLT1150A | $0.5 | 2 | $1.03 |
+| Rubber bottom end | $2.2 | 1 | $2.18 |
+| M5x25 | — | 16 | $0.41 |
+| M4x25 | — | 20 | $0.57 |
+| M4x10 | — | 28 | $0.78 |
+| M3x8 (bronze) | — | 14 | $0.64 |
+| 3D Printing parts | $77.2 | 2 | $154.41 |
+| **Total** | | | **$1,144.98** |
