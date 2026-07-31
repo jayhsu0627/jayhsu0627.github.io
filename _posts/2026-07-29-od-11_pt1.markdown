@@ -189,6 +189,8 @@ BOM list:
 | C8 110AC socket leadwire | $1.0 | 1 | $0.97 |
 | Screw bolts (M4x10, M3x8, M4x25, M5x25) | — | 78 | $2.40 |
 | **Total** | | | **$1,144.98** |
+
+
 (to keep costs down, most of the cheaper parts were sourced from China)
 
 Final thoughts: looking back at this design process, I probably just needed a BOM list like this to convince myself *not* to build one from scratch, and instead just repair the Sonab OD-11 and slap an Arylic A50+ on it. 
