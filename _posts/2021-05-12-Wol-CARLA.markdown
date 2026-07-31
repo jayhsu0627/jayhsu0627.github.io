@@ -6,7 +6,6 @@ description: Run a vitual Audi TT in Thunderhill racetrack
 image: /images/Wol_Carla.gif
 code: https://github.com/jayhsu0627/Wolverine_CARLA_Thunderhill
 importance: 1
-category: CATARC
 highlight: false
 ---
 

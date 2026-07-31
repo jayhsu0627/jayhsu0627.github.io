@@ -262,9 +262,90 @@
                 <hr>
                 <br>
                 <h3>Comments</h3>
-                <script src="https://utteranc.es/client.js" repo="jayhsu0627/jayhsu0627.github.io" issue-term="pathname"
-                  theme="github-light" crossorigin="anonymous" async>
-                  </script>
+
+                <!-- Display existing comments -->
+                {% assign slug = page.url | replace: '/', '' | replace: '.', '' %}
+                {% if site.data.comments[slug] %}
+                  {% for comment_hash in site.data.comments[slug] %}
+                    {% assign comment = comment_hash[1] %}
+                    {% assign comment_id = comment_hash[0] %}
+                    {% if comment.parent == nil or comment.parent == '' %}
+                    <div id="comment-{{ comment_id }}" style="background: #f6f8fa; padding: 15px; border-radius: 6px; margin-bottom: 15px;">
+                      <strong>{{ comment.name | default: 'Anonymous' }}</strong>
+                      <span style="color: #666; font-size: 0.85em; margin-left: 10px;">{{ comment.date | date: "%B %d, %Y" }}</span>
+                      <button onclick="setReply('{{ comment_id }}', '{{ comment.name | default: 'Anonymous' | escape }}')" style="float: right; font-size: 0.85em; color: #0366d6; background: none; border: none; cursor: pointer; text-decoration: underline;">Reply</button>
+                      <p style="margin-top: 10px; margin-bottom: 0;">{{ comment.message | newline_to_br }}</p>
+                    </div>
+                      
+                      <!-- Nested replies -->
+                      {% for child_hash in site.data.comments[slug] %}
+                        {% assign child = child_hash[1] %}
+                        {% if child.parent == comment_id %}
+                        <div id="comment-{{ child_hash[0] }}" style="background: #fff; border: 1px solid #e1e4e8; padding: 15px; border-radius: 6px; margin-bottom: 15px; margin-left: 30px;">
+                          <strong>{{ child.name | default: 'Anonymous' }}</strong>
+                          <span style="color: #666; font-size: 0.85em; margin-left: 10px;">{{ child.date | date: "%B %d, %Y" }}</span>
+                          <p style="margin-top: 10px; margin-bottom: 0;">{{ child.message | newline_to_br }}</p>
+                        </div>
+                        {% endif %}
+                      {% endfor %}
+                    {% endif %}
+                  {% endfor %}
+                {% else %}
+                  <p style="color: #666; font-style: italic;">No comments yet. Be the first to share your thoughts!</p>
+                {% endif %}
+
+                <br>
+                <!-- Add new comment form -->
+                <div data-fs-success style="display: none; padding: 15px; background: #d4edda; color: #155724; border: 1px solid #c3e6cb; border-radius: 4px; max-width: 500px; margin-top: 20px;">
+                  Thanks! Your comment has been submitted and will appear after moderation.
+                </div>
+                <div data-fs-error style="display: none; padding: 15px; background: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; border-radius: 4px; max-width: 500px; margin-top: 20px;">
+                  Oops! There was a problem submitting your comment.
+                </div>
+
+                <form id="comment-form" class="comment-form" style="display: flex; flex-direction: column; gap: 12px; max-width: 500px; margin-top: 20px;">
+                  <h4 style="margin-bottom: 5px; font-size: 1.2em;">Leave a Comment</h4>
+                  
+                  <div id="replying-to" style="display:none; background: #e1e4e8; padding: 8px 12px; border-radius: 4px; font-size: 0.9em; justify-content: space-between; align-items: center;">
+                    <span>Replying to <strong id="replying-to-name"></strong></span>
+                    <button type="button" onclick="clearReply()" style="background: none; border: none; color: #666; cursor: pointer; font-size: 1.2em; padding: 0;">&times;</button>
+                  </div>
+                  
+                  <input type="hidden" name="post_url" value="{{ site.url }}{{ page.url }}">
+                  <input type="hidden" name="parent" id="comment-parent" value="">
+                  
+                  <label for="name" style="font-weight: bold; font-size: 0.9em; margin-bottom: -8px;">Name (optional)</label>
+                  <input type="text" id="name" name="name" placeholder="Anonymous" style="padding: 8px; border: 1px solid #ccc; border-radius: 4px;" data-fs-field>
+                  
+                  <label for="email" style="font-weight: bold; font-size: 0.9em; margin-bottom: -8px;">Email (optional, will not be published)</label>
+                  <input type="email" id="email" name="email" placeholder="your@email.com" style="padding: 8px; border: 1px solid #ccc; border-radius: 4px;" data-fs-field>
+                  <span data-fs-error="email" style="color: #721c24; font-size: 0.8em; margin-top: -8px;"></span>
+                  
+                  <label for="message" style="font-weight: bold; font-size: 0.9em; margin-bottom: -8px;">Comment</label>
+                  <textarea id="message" name="message" rows="4" required style="padding: 8px; border: 1px solid #ccc; border-radius: 4px; resize: vertical;" data-fs-field></textarea>
+                  <span data-fs-error="message" style="color: #721c24; font-size: 0.8em; margin-top: -8px;"></span>
+                  
+                  <button type="submit" data-fs-submit-btn style="padding: 10px 15px; background: #0366d6; color: white; border: none; border-radius: 4px; cursor: pointer; font-weight: bold; width: fit-content; margin-top: 5px;">Submit Comment</button>
+                  <p style="font-size: 0.8em; color: #666; margin-top: 0px;">Comments are moderated and will appear after review.</p>
+                </form>
+
+                <script>
+                  window.formspree = window.formspree || function () { (formspree.q = formspree.q || []).push(arguments); };
+                  formspree('initForm', { formElement: '#comment-form', formId: 'xgogbgqb' });
+
+                  function setReply(id, name) {
+                    document.getElementById('comment-parent').value = id;
+                    document.getElementById('replying-to-name').innerText = name;
+                    document.getElementById('replying-to').style.display = 'flex';
+                    document.getElementById('message').focus();
+                    document.getElementById('comment-form').scrollIntoView({ behavior: 'smooth' });
+                  }
+                  function clearReply() {
+                    document.getElementById('comment-parent').value = '';
+                    document.getElementById('replying-to').style.display = 'none';
+                  }
+                </script>
+                <script src="https://unpkg.com/@formspree/ajax@1" defer></script>
                 {% endif %}
 
             </td>

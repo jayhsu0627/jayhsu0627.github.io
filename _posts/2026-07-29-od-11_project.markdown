@@ -1,0 +1,12 @@
+---
+layout: post
+title: "Reverse-Engineering the OD-11"
+date: 2026-07-29
+image: /OD-11/PXL_20260731_160953341.jpg
+categories: DSP
+blog: /blog/open_ortho/
+---
+
+Building an Open-Source Wi-Fi Speaker.
+
+[Read the full blog post](/blog/open_ortho/)

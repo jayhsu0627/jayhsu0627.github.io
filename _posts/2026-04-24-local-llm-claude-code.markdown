@@ -3,7 +3,7 @@ layout: blog_layout
 title: "Running Claude Code Locally: Replacing Sonnet with Local LLMs"
 date: 2026-04-24 00:00:00 +00:00
 permalink: /blog/claude-locally/
-image: /images/local_llm_claude.png
+# image: /images/local_llm_claude.png
 categories: blog
 author: "jayhsu"
 authors: "<strong>jayhsu</strong>"
