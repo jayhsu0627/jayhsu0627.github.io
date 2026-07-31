@@ -99,6 +99,67 @@ span.highlight {
   background-color: #ffffd0;
 }
 
+/* Click-to-enlarge: in-post <figure> images only */
+.post-content figure img,
+.post-content figure img.lightboxable {
+  cursor: zoom-in;
+}
+
+.post-content figure img:hover,
+.post-content figure img.lightboxable:hover {
+  outline: 2px solid #1772d0;
+  outline-offset: 2px;
+  opacity: 0.92;
+}
+
+#img-lightbox {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: rgba(0, 0, 0, 0.85);
+  align-items: center;
+  justify-content: center;
+  padding: 2vw;
+  cursor: zoom-out;
+}
+
+#img-lightbox.is-open {
+  display: flex;
+}
+
+#img-lightbox img {
+  max-width: 96vw;
+  max-height: 92vh;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  border-radius: 4px;
+  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.45);
+  cursor: default;
+  outline: none;
+  opacity: 1;
+}
+
+#img-lightbox .img-lightbox-close {
+  position: fixed;
+  top: 12px;
+  right: 16px;
+  border: 0;
+  background: transparent;
+  color: #fff;
+  font-size: 2.2rem;
+  line-height: 1;
+  cursor: pointer;
+  padding: 4px 10px;
+  opacity: 0.85;
+}
+
+#img-lightbox .img-lightbox-close:hover {
+  opacity: 1;
+  outline: none;
+}
+
 // Settled on moving the import of syntax highlighting to the bottom of the CSS
 // ... Otherwise it really bloats up the top of the CSS file and makes it difficult to find the start
 //@import "highlights";

@@ -611,8 +611,8 @@
 
           <div class="field">
             <label for="exposure">Exposure</label>
-            <input id="exposure" type="range" min="0.4" max="2.2" step="0.05" value="1.15" />
-            <output id="exposureOut" for="exposure">1.15</output>
+            <input id="exposure" type="range" min="0.4" max="2.2" step="0.05" value="2.0" />
+            <output id="exposureOut" for="exposure">2.0</output>
           </div>
           <div class="field">
             <label for="bounces">Bounces</label>
@@ -879,7 +879,7 @@
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     renderer.setSize(viewer.clientWidth, viewer.clientHeight);
     renderer.toneMapping = THREE.ACESFilmicToneMapping;
-    renderer.toneMappingExposure = 1.15;
+    renderer.toneMappingExposure = 2.0;
     renderer.autoClear = true;
     // Path tracer / CSG rebuilds can emit harmless "varying not read" link warnings
     renderer.debug.checkShaderErrors = false;
