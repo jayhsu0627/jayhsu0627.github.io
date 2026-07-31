@@ -1,6 +1,6 @@
 ---
 layout: blog_layout
-title: "How to Build a Carlsson Box Cloud Part-1"
+title: "Reverse-Engineering the OD-11: Building an Open-Source Wi-Fi Speaker Part-1"
 date: 2026-07-29 00:00:00 +00:00
 permalink: /blog/open_ortho/
 image: /images/local_llm_claude.png
@@ -144,13 +144,20 @@ I still kept the ported half-pipe in the build—that is what the box is tuned a
 </figure>
 
 
-<iframe
-  src="/tn/OD-11/index.html?v=eyJxIjoicGF0aHRyYWNlciIsIm0iOiJjb3JuZXIiLCJoIjowLCJlIjowLCJjIjpbMi45MDA5LDIuNzA1LC0wLjQ5NDRdLCJ0IjpbLTAuMDU4NywwLjg0MTYsMC4yMDM2XSwicCI6eyJ4IjpbMCwwLjUsMSwxLDEsMCwwXSwieSI6WzAsMC41LDEsMSwxLDAsMF0sInoiOlswLDAuNSwxLDEsMSwwLDBdLCJkMSI6WzAsMC41LDEsMSwxLDAsMF0sImQyIjpbMSwwLjUsMSwxLDEsMCwwXX0sIngiOjIsImIiOjQsImsiOjMsInMiOjEsInUiOjAuMDV9&embed=1"
-  title="OD-11 path-traced cross-section"
-  style="width:100%;aspect-ratio:16/10;border:0;background:#0c0e12"
-  loading="lazy"
-  allowfullscreen
-></iframe>
+<figure style="margin:1em 0;text-align:center">
+  <iframe
+    src="/tn/OD-11/index.html?v=eyJxIjoicGF0aHRyYWNlciIsIm0iOiJjb3JuZXIiLCJoIjowLCJlIjowLCJjIjpbMi45MDA5LDIuNzA1LC0wLjQ5NDRdLCJ0IjpbLTAuMDU4NywwLjg0MTYsMC4yMDM2XSwicCI6eyJ4IjpbMCwwLjUsMSwxLDEsMCwwXSwieSI6WzAsMC41LDEsMSwxLDAsMF0sInoiOlswLDAuNSwxLDEsMSwwLDBdLCJkMSI6WzAsMC41LDEsMSwxLDAsMF0sImQyIjpbMSwwLjUsMSwxLDEsMCwwXX0sIngiOjIsImIiOjQsImsiOjMsInMiOjEsInUiOjAuMDV9&embed=1"
+    title="OD-11 path-traced cross-section"
+    style="width:100%;aspect-ratio:16/10;border:0;background:#0c0e12"
+    loading="lazy"
+    allowfullscreen
+  ></iframe>
+  <figcaption style="margin-top:0.4em;font-size:0.94em;color:#888;">
+    Open-Source Carlsson Box internal viewer. Built using <a href="https://github.com/gkjohnson/three-gpu-pathtracer" target="_blank" rel="noopener">three-gpu-pathtracer</a>.
+  </figcaption>
+</figure>
+
+
 To add a more 'hybrid' design and further distance it from the TE aesthetic, I added a JBL L-100-inspired sculptured air speaker grille on top. It's made of 10ppi reticulated polyurethane foam (normally used in filtering systems). It requires careful [hot wire cutting](https://audiokarma.org/forums/threads/diy-sculptured-foam-grilles-you-can-do-this.964199/) (figuring this out delayed my build plan to the end of the year). Also, if you look at the cross-section, you might notice the ScanSpeak Discovery tweeter is significantly taller (about 15mm above the upper plane). I had to make a cavity to avoid intersecting with it and to keep the overall height within an acceptable range.
 
 To make this project truly open-source while protecting the design from unauthorized mass manufacturing, I will release the `glb` files and models under a **Creative Commons Non-Commercial (CC BY-NC 4.0)** license. You can use this customized viewer below to check the internal details of my assembly, view the cross-section from different angles, and toggle between plain or path-traced rendering.
@@ -182,8 +189,10 @@ BOM list:
 | C8 110AC socket leadwire | $1.0 | 1 | $0.97 |
 | Screw bolts (M4x10, M3x8, M4x25, M5x25) | — | 78 | $2.40 |
 | **Total** | | | **$1,144.98** |
-
+(to keep costs down, most of the cheaper parts were sourced from China)
 
 Final thoughts: looking back at this design process, I probably just needed a BOM list like this to convince myself *not* to build one from scratch, and instead just repair the Sonab OD-11 and slap an Arylic A50+ on it. 
 
-But honestly, $1145 for two active DSP speakers is a great price, and it brings a bit more romance and noise into our home (well, now the noise is doubled). At the very least, I learned basic woodworking on my Ryobi BT3000, refreshed my SolidWorks skills, and built an interactive `.glb` CG viewer. While open-sourcing this project won't lead to any groundbreaking scientific research (signal processing is thoroughly investigated territory), I'll report back once I finish the physical build, especially the REW calibration.
+But honestly, $1145 for two active DSP speakers is a great price, and it brings a bit more romance and noise into our home (well, now the noise is doubled). At the very least, I learned basic woodworking on my Ryobi BT3000, refreshed my SolidWorks skills, and built an interactive `.glb` CG viewer using three-gpu-pathtracer. There is something deeply satisfying about taking a complex, closed system, modeling its physical boundaries, and rebuilding it entirely in the open. As someone who spends their days working with AI, I can only hope that one day we'll be able to open-source and inspect large language models with the same level of mechanical transparency we have here.
+
+I'll report back once I finish the physical build, especially the REW calibration.
