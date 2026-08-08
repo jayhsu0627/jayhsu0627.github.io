@@ -1,0 +1,131 @@
+{
+  "default": "gemma-2-9b-it",
+  "models": [
+    {
+      "key": "gemma-2-2b-it",
+      "label": "Gemma-2-2B-IT",
+      "role": "instruct",
+      "layer": 9,
+      "paper_alpha": 1.0,
+      "file": "examples_gemma_2_2b_it.json",
+      "n": 299
+    },
+    {
+      "key": "gemma-2-9b-it",
+      "label": "Gemma-2-9B-IT",
+      "role": "instruct",
+      "layer": 18,
+      "paper_alpha": 1.0,
+      "file": "examples_gemma_2_9b_it.json",
+      "n": 299
+    },
+    {
+      "key": "gemma-2-27b-it",
+      "label": "Gemma-2-27B-IT",
+      "role": "instruct",
+      "layer": 16,
+      "paper_alpha": 1.0,
+      "file": "examples_gemma_2_27b_it.json",
+      "n": 299
+    },
+    {
+      "key": "llama-3.1-8b-instruct",
+      "label": "Llama-3.1-8B-Instruct",
+      "role": "instruct",
+      "layer": 11,
+      "paper_alpha": 1.5,
+      "file": "examples_llama_3_1_8b_instruct.json",
+      "n": 299
+    },
+    {
+      "key": "qwen-2.5-7b-instruct",
+      "label": "Qwen-2.5-7B-Instruct",
+      "role": "instruct",
+      "layer": 13,
+      "paper_alpha": 2.0,
+      "file": "examples_qwen_2_5_7b_instruct.json",
+      "n": 299
+    },
+    {
+      "key": "qwen-2.5-14b-instruct",
+      "label": "Qwen-2.5-14B-Instruct",
+      "role": "instruct",
+      "layer": 24,
+      "paper_alpha": 2.0,
+      "file": "examples_qwen_2_5_14b_instruct.json",
+      "n": 299
+    },
+    {
+      "key": "qwen-2.5-32b-instruct",
+      "label": "Qwen-2.5-32B-Instruct",
+      "role": "instruct",
+      "layer": 25,
+      "paper_alpha": 2.0,
+      "file": "examples_qwen_2_5_32b_instruct.json",
+      "n": 299
+    },
+    {
+      "key": "gemma-2-2b",
+      "label": "Gemma-2-2B (base)",
+      "role": "base",
+      "layer": 2,
+      "paper_alpha": 1.0,
+      "file": "examples_gemma_2_2b.json",
+      "n": 299
+    },
+    {
+      "key": "gemma-2-9b",
+      "label": "Gemma-2-9B (base)",
+      "role": "base",
+      "layer": 5,
+      "paper_alpha": 1.0,
+      "file": "examples_gemma_2_9b.json",
+      "n": 299
+    },
+    {
+      "key": "gemma-2-27b",
+      "label": "Gemma-2-27B (base)",
+      "role": "base",
+      "layer": 0,
+      "paper_alpha": 1.0,
+      "file": "examples_gemma_2_27b.json",
+      "n": 299
+    },
+    {
+      "key": "llama-3.1-8b",
+      "label": "Llama-3.1-8B (base)",
+      "role": "base",
+      "layer": 15,
+      "paper_alpha": 1.5,
+      "file": "examples_llama_3_1_8b.json",
+      "n": 299
+    },
+    {
+      "key": "qwen-2.5-7b",
+      "label": "Qwen-2.5-7B (base)",
+      "role": "base",
+      "layer": 18,
+      "paper_alpha": 2.0,
+      "file": "examples_qwen_2_5_7b.json",
+      "n": 299
+    },
+    {
+      "key": "qwen-2.5-14b",
+      "label": "Qwen-2.5-14B (base)",
+      "role": "base",
+      "layer": 29,
+      "paper_alpha": 2.0,
+      "file": "examples_qwen_2_5_14b.json",
+      "n": 299
+    },
+    {
+      "key": "qwen-2.5-32b",
+      "label": "Qwen-2.5-32B (base)",
+      "role": "base",
+      "layer": 45,
+      "paper_alpha": 2.0,
+      "file": "examples_qwen_2_5_32b.json",
+      "n": 299
+    }
+  ]
+}

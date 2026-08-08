@@ -9,7 +9,7 @@ authors: "<strong>Shengjie Xu</strong>"
 venue: "COLM"
 arxiv: "#"
 code: "#"
-website: "#"
+website: /conferences/2026_COLM_analogy-vector/
 emoji: /images/emojis/donnie_ninja-turtle.png
 highlight: true
 ---

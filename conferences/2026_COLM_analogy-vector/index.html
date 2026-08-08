@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>From Geometry to Causality: How Instruction Exposure Wires Up Latent Rhetorical Directions in LLMs</title>
+  <meta name="description"
+        content="COLM 2026: Analogy-making is a steerable direction in LLM activation space. Causal wiring tracks instruction exposure across seven matched base–instruct pairs.">
+  <meta name="keywords"
+        content="analogy vector, activation steering, causal wiring, instruction tuning, COLM 2026, mechanistic interpretability">
+  <meta name="citation_title" content="From Geometry to Causality: How Instruction Exposure Wires Up Latent Rhetorical Directions in LLMs">
+  <meta name="citation_author" content="Xu, Shengjie">
+  <meta name="citation_publication_date" content="2026">
+  <meta name="citation_conference_title" content="Conference on Language Modeling (COLM)">
+  <meta name="citation_pdf_url" content="./static/main_paper.pdf">
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+  <script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script>
+</head>
+<body>
+
+<nav class="navbar" role="navigation" aria-label="main navigation">
+  <div class="navbar-brand">
+    <a class="navbar-item" href="#"><b>Analogy Vector</b></a>
+    <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasic">
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+    </a>
+  </div>
+  <div id="navbarBasic" class="navbar-menu">
+    <div class="navbar-start" style="flex-grow: 1; justify-content: center;">
+      <a class="navbar-item" href="#abstract">Abstract</a>
+      <a class="navbar-item" href="#findings">Key Findings</a>
+      <a class="navbar-item" href="#example">Examples</a>
+      <a class="navbar-item" href="#explorer">3D Explorer</a>
+      <a class="navbar-item" href="#results">Results</a>
+      <a class="navbar-item" href="#faq">FAQ</a>
+      <a class="navbar-item" href="#BibTeX">Cite</a>
+    </div>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column has-text-centered">
+          <h1 class="title is-1 publication-title">
+            From Geometry to Causality: How Instruction Exposure Wires Up Latent Rhetorical Directions in LLMs
+          </h1>
+          <div class="is-size-5 publication-authors">
+            <span class="author-block">Shengjie Xu</span>
+          </div>
+          <div class="is-size-5 publication-authors">
+            <span class="author-block">University of Maryland</span>
+          </div>
+          <div class="is-size-5 publication-authors">
+            <span class="author-block publication-venue">
+              <em>Conference on Language Modeling (COLM) 2026</em>
+            </span>
+          </div>
+
+          <div class="column has-text-centered">
+            <div class="publication-links">
+              <span class="link-block">
+                <a href="./static/main_paper.pdf" class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon"><i class="fas fa-file-pdf"></i></span>
+                  <span>Paper</span>
+                </a>
+              </span>
+              <span class="link-block">
+                <a href="#BibTeX" class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon"><i class="fas fa-quote-right"></i></span>
+                  <span>Cite</span>
+                </a>
+              </span>
+              <span class="link-block">
+                <a href="#roadmap" class="external-link button is-normal is-rounded is-dark disabled-link" aria-disabled="true">
+                  <span class="icon"><i class="fab fa-github"></i></span>
+                  <span>Code</span>
+                </a>
+              </span>
+              <span class="link-block">
+                <a href="#explorer" class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon"><i class="fas fa-cube"></i></span>
+                  <span>3D Explorer</span>
+                </a>
+              </span>
+              <span class="link-block">
+                <a href="#roadmap" class="external-link button is-normal is-rounded is-dark disabled-link" aria-disabled="true">
+                  <span class="icon"><i class="fas fa-play"></i></span>
+                  <span>Demo</span>
+                </a>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="hero teaser">
+  <div class="container is-max-desktop">
+    <div class="hero-body">
+      <img src="./static/images/fig_hm_landscape.png"
+           alt="Harmonic mean steering landscape across seven base–instruct pairs"
+           style="width:100%; max-width:960px; display:block; margin:0 auto;">
+      <h2 class="subtitle has-text-centered" style="margin-top:1.5rem;">
+        The analogy direction exists in <b>every</b> base model, but
+        <b style="color:#1f77b4;">causal wiring</b> scales with instruction exposure.
+        Gemma-2 bases are inert; Qwen-2.5 bases are already partially wired.
+      </h2>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="abstract">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Abstract</h2>
+        <div class="content has-text-justified">
+          <p>
+            Language models do not merely memorize facts—they absorb rhetorical strategies from
+            pretraining data, including the human tendency to reason by analogy. We ask: is this
+            absorbed capability geometrically accessible before any instruction tuning, and what
+            determines whether it can be activated at inference time?
+          </p>
+          <p>
+            We extract an “Analogy Vector” from the residual stream via difference-in-means and show
+            it enables steerable explanation style across <b>seven instruction-tuned models</b>
+            (Gemma-2, Llama-3.1, Qwen-2.5; 2B–32B), improving harmonic mean from 3.22 to 3.94
+            (+22%) for Gemma-2-9B-IT on 299 held-out test prompts.
+          </p>
+          <p>
+            Our central finding, from <b>seven matched base–instruct pairs</b>, is a
+            <em>gradient of causal wiring</em>: the analogy direction exists in every base model,
+            but its behavioral accessibility scales continuously with instruction exposure during
+            training. Gemma-2 base models (strict pretraining/IT separation) show flat steering
+            landscapes—present but causally inert. Qwen-2.5 base models (instruction data woven into
+            pretraining) are already partially wired before any explicit fine-tuning.
+          </p>
+        </div>
+        <div class="takeaway has-text-left">
+          <p>
+            <b>TL;DR.</b> Geometry is not enough. Whether a latent rhetorical direction can move
+            behavior depends on how much instruction exposure the model has already seen.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="findings" style="padding-top:0;">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3 has-text-centered">Key Findings</h2>
+        <div class="content has-text-justified">
+          <p>
+            <b>Gradient of causal wiring.</b> The analogy direction exists in every base model, but
+            accessibility scales with instruction exposure across the full training pipeline—not a
+            binary base vs. instruct switch.
+          </p>
+          <p>
+            <b>KL as a wiring diagnostic.</b> KL divergence under steering reveals whether an
+            intervention pathway exists even when output quality is low, tracking the wiring gradient
+            without requiring instruction-following.
+          </p>
+          <p>
+            <b>Orthogonalization fixes collapse.</b> At high <span class="dnerf">&alpha;</span>,
+            lexical entanglement with “Imagine” causes mode collapse. Projecting it out cuts collapse
+            75–92% while preserving steering effectiveness.
+          </p>
+          <p>
+            <b>Steering as interpretability lever.</b> Explicit prompting remains strongest
+            (~4.4/5). We position activation steering as a complementary, training-free tool for
+            amplifying latent rhetorical strategies.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="example">
+  <div class="container is-max-widescreen">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-full">
+        <h2 class="title is-3">Steering Examples</h2>
+        <div class="content has-text-justified" style="max-width:48rem;margin:0 auto 1.25rem;">
+          <p>
+            Browse all 299 held-out test prompts across fourteen models. Compare
+            <b>unsteered</b> literal generation, <b>steered</b> clean-vector output at the
+            paper’s operating α, and an explicit <b>prompting</b> baseline—scored with the
+            same three-metric judge used in the paper (AQ / FL / IF → HM).
+          </p>
+        </div>
+
+        <div class="example-browser" id="example-browser">
+          <aside class="ex-sidebar">
+            <div class="ex-controls">
+              <label>
+                Model
+                <select id="ex-model"></select>
+              </label>
+              <label>
+                Search
+                <input type="search" id="ex-search" placeholder="prompt, concept, domain…" />
+              </label>
+              <label>
+                Domain
+                <select id="ex-domain"><option value="">All domains</option></select>
+              </label>
+              <label>
+                Min HM (active condition)
+                <select id="ex-hm">
+                  <option value="0">Any</option>
+                  <option value="2">≥ 2</option>
+                  <option value="3">≥ 3</option>
+                  <option value="4">≥ 4</option>
+                  <option value="4.5">≥ 4.5</option>
+                </select>
+              </label>
+              <div class="ex-status" id="ex-status"></div>
+            </div>
+            <div class="ex-list" id="ex-list"></div>
+          </aside>
+
+          <div class="ex-main">
+            <div class="ex-topbar">
+              <div class="ex-meta" id="ex-meta">Loading…</div>
+              <span class="ex-counter" id="ex-counter"></span>
+              <div class="ex-nav">
+                <button type="button" id="ex-prev">← Prev</button>
+                <button type="button" id="ex-next">Next →</button>
+              </div>
+            </div>
+            <div class="ex-condition-bar">
+              <div class="ex-toggle" id="ex-conditions" role="tablist">
+                <button type="button" data-cond="unsteered_literal">Unsteered</button>
+                <button type="button" class="is-active" data-cond="steered_clean">Steered</button>
+                <button type="button" data-cond="prompting_baseline">Prompting</button>
+              </div>
+              <div class="ex-scores" id="ex-scores"></div>
+            </div>
+            <div class="ex-chat" id="ex-chat">
+              <p class="ex-empty">Loading examples…</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="method">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Methodology</h2>
+        <div class="content has-text-justified">
+          <p>
+            We extract an Analogy Vector by difference-in-means on a domain-balanced ELI5 contrast
+            set, intervene on the residual stream, and orthogonalize against lexical triggers that
+            cause mode collapse—following the single-direction approach of Arditi et al. (2024).
+          </p>
+          <p class="method-eq">
+            <b>Extract:</b>
+            v<sub>analogy</sub> = μ<sub>analogy</sub> − μ<sub>literal</sub>
+          </p>
+          <p class="method-eq">
+            <b>Steer:</b>
+            x′<sub>L</sub> = x<sub>L</sub> + α · v<sub>analogy</sub>
+          </p>
+          <p class="method-eq">
+            <b>Clean:</b>
+            v<sub>clean</sub> = v − proj<sub>d<sub>Imagine</sub></sub>(v)
+          </p>
+          <p>
+            Evaluation uses a three-metric LLM-as-a-judge setup (Analogy Quality, Fluency,
+            Instruction-Following) with harmonic mean following AxBench. All reported results use
+            the clean vector on 299 held-out test prompts.
+          </p>
+        </div>
+        <img src="./static/images/sanity_clean_vs_dirty_gemma_layer29.png"
+             alt="Clean versus dirty analogy vector comparison"
+             style="max-width:720px; width:100%; margin:0 auto;">
+        <p class="figure-caption" style="max-width:720px; margin:0.5rem auto 0;">
+          Orthogonalization reduces mode collapse while preserving steering effectiveness.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="results">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Results</h2>
+        <div class="content has-text-justified">
+          <p>
+            Steering selectively lifts analogy quality across seven IT models. The α-response shape
+            and KL landscapes corroborate the same wiring gradient.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="table-scroll">
+      <table class="results-table" style="max-width:760px; margin:auto;">
+        <thead>
+          <tr>
+            <th>Model</th>
+            <th>Literal HM</th>
+            <th>Steered HM</th>
+            <th>ΔHM</th>
+            <th>Best α</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Gemma-2-2B-IT</td><td>3.04</td><td>3.58</td><td class="cell-pos">+0.53</td><td>1.0</td></tr>
+          <tr><td>Gemma-2-9B-IT</td><td>3.22</td><td>3.94</td><td class="cell-pos">+0.71</td><td>1.0</td></tr>
+          <tr><td>Gemma-2-27B-IT</td><td>3.18</td><td>3.98</td><td class="cell-pos">+0.80</td><td>1.0</td></tr>
+          <tr><td>Llama-3.1-8B-IT</td><td>2.97</td><td>3.12</td><td class="cell-pos">+0.15</td><td>1.5</td></tr>
+          <tr><td>Qwen-2.5-7B-IT</td><td>3.02</td><td>3.40</td><td class="cell-pos">+0.38</td><td>2.0</td></tr>
+          <tr><td>Qwen-2.5-14B-IT</td><td>2.98</td><td>3.78</td><td class="cell-pos">+0.81</td><td>2.0</td></tr>
+          <tr><td>Qwen-2.5-32B-IT</td><td>2.98</td><td>3.28</td><td class="cell-pos">+0.31</td><td>2.0</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="figure-caption" style="max-width:760px; margin:0.25rem auto 1.5rem;">
+      Steered = neutral prompt + clean analogy vector at the empirically best layer. SEM ≤ 0.06.
+    </p>
+
+    <img src="./static/images/fig_alpha_sweep.png"
+         alt="Harmonic mean versus steering coefficient"
+         style="width:100%; max-width:860px; display:block; margin:0 auto;">
+    <p class="figure-caption" style="max-width:860px; margin:0.5rem auto 1.75rem;">
+      Gemma-2 peaks at α ≈ 1.0 then collapses; Qwen-2.5 improves monotonically through α = 2.0.
+    </p>
+
+    <img src="./static/images/fig_kl_landscape.png"
+         alt="KL divergence landscapes under steering"
+         style="width:100%; max-width:860px; display:block; margin:0 auto;">
+    <p class="figure-caption" style="max-width:860px; margin:0.5rem auto 0;">
+      KL under steering as a model-agnostic probe of pre-existing causal wiring.
+    </p>
+  </div>
+</section>
+
+<section class="section" id="faq">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3 has-text-centered">Frequently Asked Questions</h2>
+
+        <div class="faq-item content">
+          <h3>What is the Analogy Vector?</h3>
+          <p>
+            A single residual-stream direction obtained by difference-in-means between analogical and
+            literal explanation prompts. Adding it at a chosen layer
+            (x′ = x + α · v) biases the model toward analogy-making even on neutral prompts.
+          </p>
+        </div>
+
+        <div class="faq-item content">
+          <h3>Does the direction exist before instruction tuning?</h3>
+          <p>
+            Yes geometrically—in every base model we studied. But causal efficacy is not binary:
+            Gemma-2 bases are causally inert under steering, while Qwen-2.5 bases (instruction data
+            in pretraining) are already partially wired.
+          </p>
+        </div>
+
+        <div class="faq-item content">
+          <h3>Why orthogonalize against “Imagine”?</h3>
+          <p>
+            At high coefficients the vector’s lexical component collapses generation into
+            “Imagine …” loops. Removing the Imagine unembedding direction preserves the semantic
+            signal and restores fluent steered text.
+          </p>
+        </div>
+
+        <div class="faq-item content">
+          <h3>Is steering better than prompting?</h3>
+          <p>
+            No. Prompting remains the strongest practical method. Steering is useful as an
+            interpretability probe of rhetorical geometry and as a prompt-composable inference-time
+            lever when the direction is already wired.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="explorer">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">3D PCA Explorer</h2>
+        <div class="content has-text-justified">
+          <p>
+            Last-token residual activations for all 1,000 v5 concept pairs,
+            across all <b>14</b> paper models (7 instruct + 7 base) at each
+            empirical <i>l*</i>. Literal / analogy clouds visualize the linear
+            contrast; means and the clean vector follow the paper’s train-set
+            difference-in-means. See
+            <a href="./PCA_FINDINGS.md">PCA_FINDINGS.md</a> for interpretation notes.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="explorer-wrap">
+    <div class="controls">
+      <div class="control-card">
+        <h3>Model &amp; display</h3>
+        <div class="control-row">
+          <label for="model-select"><b>Model</b></label>
+          <select id="model-select"></select>
+        </div>
+        <div class="control-row">
+          <label><input type="checkbox" id="show-literal" checked> <span class="swatch" style="background:#1f77b4;"></span>Literal</label>
+          <label><input type="checkbox" id="show-analogy" checked> <span class="swatch" style="background:#d95f02;"></span>Analogy</label>
+        </div>
+        <div class="control-row">
+          <label>Splits:</label>
+          <label><input type="checkbox" class="split-filter" value="train" checked> train</label>
+          <label><input type="checkbox" class="split-filter" value="dev" checked> dev</label>
+          <label><input type="checkbox" class="split-filter" value="test" checked> test</label>
+        </div>
+        <div class="control-row">
+          <label for="domain-filter">Domain</label>
+          <select id="domain-filter"><option value="all">All domains</option></select>
+        </div>
+        <div class="control-row">
+          <label for="color-mode">Color by</label>
+          <select id="color-mode">
+            <option value="kind">Literal / Analogy</option>
+            <option value="domain">Domain</option>
+            <option value="split">Split</option>
+          </select>
+        </div>
+        <div class="control-row">
+          <label><input type="checkbox" id="show-means" checked> Train means</label>
+          <label><input type="checkbox" id="show-clean" checked> Clean vector</label>
+          <label><input type="checkbox" id="show-dirty"> Dirty vector</label>
+          <label><input type="checkbox" id="show-imagine"> “Imagine”</label>
+        </div>
+        <div class="control-row">
+          <label for="alpha">Steering α&nbsp;<span id="alpha-val">1.0</span></label>
+          <input id="alpha" type="range" min="0" max="2" step="0.1" value="1.0" style="flex:1; min-width:140px;">
+        </div>
+      </div>
+      <div class="control-card">
+        <h3>About this view</h3>
+        <p id="about-text" style="margin:0;color:#555;font-size:0.95rem;line-height:1.55;">
+          Loading models…
+        </p>
+        <p class="meta-line" id="hover-info">Hover a point to see its concept.</p>
+        <p class="meta-line pending" id="export-status"></p>
+      </div>
+    </div>
+    <div id="pca-plot"></div>
+    <p class="figure-caption" style="max-width:1100px;margin:0.75rem auto 0;">
+      Drag to rotate · scroll to zoom · double-click to reset.
+      PCA is fit per model on last-token residuals at paper <i>l*</i>;
+      μ and vector overlays use the <b>train</b> split.
+    </p>
+  </div>
+</section>
+
+<section class="section" id="roadmap" style="padding-top:0;">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3 has-text-centered">Coming Next</h2>
+        <div class="content has-text-justified">
+          <p>
+            <b>Try the vector.</b> Hugging Face Space with side-by-side literal vs.
+            steered generation.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="BibTeX">
+  <div class="container is-max-desktop content">
+    <h2 class="title">BibTeX</h2>
+    <div class="bibtex-block">
+      <button id="copy-bibtex" class="button is-small is-rounded copy" type="button">Copy</button>
+      <pre class="bibtex" id="bibtex">@inproceedings{analogyvector2026,
+  title     = {From Geometry to Causality: How Instruction Exposure
+               Wires Up Latent Rhetorical Directions in LLMs},
+  author    = {Xu, Shengjie},
+  booktitle = {Conference on Language Modeling (COLM)},
+  year      = {2026}
+}</pre>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <div class="content has-text-centered">
+      <p>
+        Analogy Vector · Accepted to COLM 2026.<br>
+        Website template borrowed from
+        <a href="https://github.com/nerfies/nerfies.github.io">Nerfies</a>.
+      </p>
+    </div>
+  </div>
+</footer>
+
+<script src="./static/js/index.js"></script>
+<script src="./static/js/example_browser.js"></script>
+<script src="./static/js/pca_explorer.js"></script>
+</body>
+</html>

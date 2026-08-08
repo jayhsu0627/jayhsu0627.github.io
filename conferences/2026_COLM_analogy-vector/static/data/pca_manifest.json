@@ -1,0 +1,135 @@
+{
+  "models": [
+    {
+      "key": "gemma-2-2b-it",
+      "label": "Gemma-2-2B-IT",
+      "layer": 9,
+      "role": "instruct",
+      "file": "pca_gemma_2_2b_it.json",
+      "ready": true,
+      "n_pairs": 1000
+    },
+    {
+      "key": "gemma-2-9b-it",
+      "label": "Gemma-2-9B-IT",
+      "layer": 18,
+      "role": "instruct",
+      "file": "pca_gemma_2_9b_it.json",
+      "ready": true,
+      "n_pairs": 1000
+    },
+    {
+      "key": "gemma-2-27b-it",
+      "label": "Gemma-2-27B-IT",
+      "layer": 16,
+      "role": "instruct",
+      "file": "pca_gemma_2_27b_it.json",
+      "ready": true,
+      "n_pairs": 1000
+    },
+    {
+      "key": "llama-3.1-8b-instruct",
+      "label": "Llama-3.1-8B-Instruct",
+      "layer": 11,
+      "role": "instruct",
+      "file": "pca_llama_3_1_8b_instruct.json",
+      "ready": true,
+      "n_pairs": 1000
+    },
+    {
+      "key": "qwen-2.5-7b-instruct",
+      "label": "Qwen-2.5-7B-Instruct",
+      "layer": 18,
+      "role": "instruct",
+      "file": "pca_qwen_2_5_7b_instruct.json",
+      "ready": true,
+      "n_pairs": 1000
+    },
+    {
+      "key": "qwen-2.5-14b-instruct",
+      "label": "Qwen-2.5-14B-Instruct",
+      "layer": 24,
+      "role": "instruct",
+      "file": "pca_qwen_2_5_14b_instruct.json",
+      "ready": true,
+      "n_pairs": 1000
+    },
+    {
+      "key": "qwen-2.5-32b-instruct",
+      "label": "Qwen-2.5-32B-Instruct",
+      "layer": 25,
+      "role": "instruct",
+      "file": "pca_qwen_2_5_32b_instruct.json",
+      "ready": true,
+      "n_pairs": 1000
+    },
+    {
+      "key": "gemma-2-2b",
+      "label": "Gemma-2-2B (base)",
+      "layer": 2,
+      "role": "base",
+      "file": "pca_gemma_2_2b.json",
+      "ready": true,
+      "n_pairs": 1000
+    },
+    {
+      "key": "gemma-2-9b",
+      "label": "Gemma-2-9B (base)",
+      "layer": 5,
+      "role": "base",
+      "file": "pca_gemma_2_9b.json",
+      "ready": true,
+      "n_pairs": 1000
+    },
+    {
+      "key": "gemma-2-27b",
+      "label": "Gemma-2-27B (base)",
+      "layer": 0,
+      "role": "base",
+      "file": "pca_gemma_2_27b.json",
+      "ready": true,
+      "n_pairs": 1000
+    },
+    {
+      "key": "llama-3.1-8b",
+      "label": "Llama-3.1-8B (base)",
+      "layer": 15,
+      "role": "base",
+      "file": "pca_llama_3_1_8b.json",
+      "ready": true,
+      "n_pairs": 1000
+    },
+    {
+      "key": "qwen-2.5-7b",
+      "label": "Qwen-2.5-7B (base)",
+      "layer": 18,
+      "role": "base",
+      "file": "pca_qwen_2_5_7b.json",
+      "ready": true,
+      "n_pairs": 1000
+    },
+    {
+      "key": "qwen-2.5-14b",
+      "label": "Qwen-2.5-14B (base)",
+      "layer": 29,
+      "role": "base",
+      "file": "pca_qwen_2_5_14b.json",
+      "ready": true,
+      "n_pairs": 1000
+    },
+    {
+      "key": "qwen-2.5-32b",
+      "label": "Qwen-2.5-32B (base)",
+      "layer": 45,
+      "role": "base",
+      "file": "pca_qwen_2_5_32b.json",
+      "ready": true,
+      "n_pairs": 1000
+    }
+  ],
+  "default": "gemma-2-2b-it",
+  "roles": [
+    "instruct",
+    "base"
+  ]
+}
