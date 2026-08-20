@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Real-Time Diffusion Relighting as a Neural Sensor | IROS 2026</title>
+  <meta name="description"
+        content="IROS 2026: Generative neural sensing closes the low-light domain gap for robotic perception with asynchronous, uncertainty-aware diffusion relighting.">
+  <meta name="keywords"
+        content="diffusion relighting, neural sensor, low-light perception, CARLA, IROS 2026, generative AI, robotics">
+  <meta name="citation_title" content="Real-Time Diffusion Relighting as a Neural Sensor: Closing the Low-Light Domain Gap for Robotic Perception">
+  <meta name="citation_author" content="Xu, Shengjie">
+  <meta name="citation_author" content="Gao, Alexander">
+  <meta name="citation_author" content="Rai, Anshul">
+  <meta name="citation_author" content="Lee, Dae Yeol">
+  <meta name="citation_author" content="Su, Guan-Ming">
+  <meta name="citation_author" content="Lin, Ming C.">
+  <meta name="citation_publication_date" content="2026">
+  <meta name="citation_conference_title" content="IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS)">
+  <meta name="citation_pdf_url" content="./static/main_paper.pdf">
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+</head>
+<body>
+
+<nav class="navbar" role="navigation" aria-label="main navigation">
+  <div class="navbar-brand">
+    <a class="navbar-item" href="#"><b>Neural Sensor</b></a>
+    <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasic">
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+    </a>
+  </div>
+  <div id="navbarBasic" class="navbar-menu">
+    <div class="navbar-start" style="flex-grow: 1; justify-content: center;">
+      <a class="navbar-item" href="#abstract">Abstract</a>
+      <a class="navbar-item" href="#findings">Findings</a>
+      <a class="navbar-item" href="#video">Video</a>
+      <a class="navbar-item" href="#qualitative">Examples</a>
+      <a class="navbar-item" href="#results">Results</a>
+      <a class="navbar-item" href="#BibTeX">Cite</a>
+    </div>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column has-text-centered">
+          <h1 class="title is-1 publication-title">
+            Real-Time Diffusion Relighting as a Neural Sensor:<br>
+            Closing the Low-Light Domain Gap for Robotic Perception
+          </h1>
+          <div class="is-size-5 publication-authors">
+            <span class="author-block">Shengjie Xu<sup>1</sup>,</span>
+            <span class="author-block">Alexander Gao<sup>1</sup>,</span>
+            <span class="author-block">Anshul Rai<sup>2</sup>,</span>
+            <span class="author-block">Dae Yeol Lee<sup>2</sup>,</span>
+            <span class="author-block">Guan-Ming Su<sup>2</sup>,</span>
+            <span class="author-block">Ming C. Lin<sup>1</sup></span>
+          </div>
+          <div class="is-size-6 publication-authors" style="margin-top:0.35rem;">
+            <span class="author-block"><sup>1</sup>University of Maryland, College Park</span>&nbsp;&nbsp;
+            <span class="author-block"><sup>2</sup>Dolby Laboratories</span>
+          </div>
+          <div class="is-size-5 publication-authors">
+            <span class="author-block publication-venue">
+              <em>IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS) 2026</em>
+            </span>
+          </div>
+
+          <div class="column has-text-centered">
+            <div class="publication-links">
+              <span class="link-block">
+                <a href="./static/main_paper.pdf" class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon"><i class="fas fa-file-pdf"></i></span>
+                  <span>Paper</span>
+                </a>
+              </span>
+              <span class="link-block">
+                <a href="https://github.com/jayhsu0627/Wolverine_CARLA_Thunderhill" class="external-link button is-normal is-rounded is-dark" target="_blank" rel="noopener">
+                  <span class="icon"><i class="fab fa-github"></i></span>
+                  <span>Code</span>
+                </a>
+              </span>
+              <span class="link-block">
+                <a href="#video" class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon"><i class="fas fa-play"></i></span>
+                  <span>Video</span>
+                </a>
+              </span>
+              <span class="link-block">
+                <a href="#BibTeX" class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon"><i class="fas fa-quote-right"></i></span>
+                  <span>Cite</span>
+                </a>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="hero teaser">
+  <div class="container is-max-desktop">
+    <div class="hero-body">
+      <div class="cmp-pair">
+        <div class="cmp-cell">
+          <img src="./static/images/carla/night_progress_020p_raw_frame_000477.png" alt="CARLA night raw camera">
+          <div class="cmp-title">Night camera (raw)</div>
+        </div>
+        <div class="cmp-cell">
+          <img src="./static/images/carla/night_progress_020p_relit_frame_000477.png" alt="CARLA night relit by neural sensor">
+          <div class="cmp-title">Generative neural sensor</div>
+        </div>
+      </div>
+      <h2 class="subtitle has-text-centered" style="margin-top:1.5rem;">
+        Treat illumination as a <b>generative prior</b>, not a signal-processing filter—
+        then run the heavy model as an asynchronous sensor inside the control loop.
+      </h2>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="abstract">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Abstract</h2>
+        <div class="content has-text-justified">
+          <p>
+            Low-light conditions severely degrade robotic perception: object detectors trained on
+            daylight imagery fail under fog and darkness, yet existing Low-Light Image Enhancement
+            (LLIE) methods are designed for offline processing and cannot integrate into live
+            control loops. We identify a critical deployment gap—no prior work runs a large
+            generative model as a real-time sensor inside a control loop.
+          </p>
+          <p>
+            We introduce a <b>Generative Neural Sensor</b> that treats illumination as a generative
+            prior rather than a signal processing problem, enabling task-relevant semantic recovery.
+            An <b>Asynchronous Perceptual Architecture</b> decouples high-latency semantic recovery
+            from low-latency vehicle control, isolating a rectified-flow transformer and illumination
+            adapter in a background thread. Uncertainty-aware activation triggers enhancement only
+            when detection confidence drops, treating generative compute as a sparse resource.
+          </p>
+        </div>
+        <div class="metric-grid">
+          <div class="metric-card">
+            <div class="metric-value">87.1%</div>
+            <div class="metric-label">ExDark mean AP<br>(+10.5 vs. IROS&nbsp;2025 SOTA)</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-value">0.855</div>
+            <div class="metric-label">vKITTI2 Fog F1<br>(+0.174 over baseline)</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-value">100%</div>
+            <div class="metric-label">CARLA lap completion<br>with closed-loop control</div>
+          </div>
+        </div>
+        <div class="takeaway has-text-left">
+          <p>
+            <b>TL;DR.</b> Pixel-reconstruction LLIE can erase the edges detectors need.
+            Generative semantic recovery + async, confidence-triggered deployment closes the
+            low-light domain gap for live robotic control.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="findings" style="padding-top:0;">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3 has-text-centered">Key Findings</h2>
+        <div class="content has-text-justified">
+          <p>
+            <b>Semantic priors beat pixel reconstruction.</b> On ExDark, our method leads all
+            12 categories (87.1% mAP). On vKITTI2 fog, MambaSFLNet falls <em>below</em> the
+            unenhanced baseline (F1 0.579), while generative recovery reaches F1 0.855.
+          </p>
+          <p>
+            <b>Async neural sensing.</b> A large diffusion model need not block the 20&nbsp;Hz control
+            loop: isolate it in a background thread and feed the latest relit manifold to detection.
+          </p>
+          <p>
+            <b>Uncertainty-aware activation.</b> At sunset, event-driven triggering relights only
+            0.4% of frames, cutting GPU utilization from 95% to 0.4% while also reducing collisions—
+            gating avoids unnecessary generative artifacts.
+          </p>
+          <p>
+            <b>Closed-loop safety.</b> On Thunderhill in CARLA, generative sensing restores near-daylight
+            collision rates under sunset and night; CLAHE does not.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="video">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-full">
+        <h2 class="title is-3">Supplemental Video</h2>
+        <div class="content has-text-justified" style="max-width:48rem;margin:0 auto 1rem;">
+          <p>
+            Pipeline overview and asynchronous active-perception animation from the paper
+            supplemental materials.
+          </p>
+        </div>
+        <div class="video-wrap">
+          <video controls playsinline preload="metadata"
+                 poster="./static/images/carla/night_progress_020p_relit_frame_000477.png">
+            <source src="./static/videos/FullPipelineOverview.mp4" type="video/mp4">
+          </video>
+          <p class="figure-caption">Full pipeline overview — generative neural sensor in the loop.</p>
+        </div>
+        <div class="video-wrap" style="margin-top:1.75rem;">
+          <video controls playsinline preload="metadata">
+            <source src="./static/videos/AsyncActivePerception.mp4" type="video/mp4">
+          </video>
+          <p class="figure-caption">Asynchronous active perception — high-latency recovery decoupled from control.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="qualitative">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-full">
+        <h2 class="title is-3">Qualitative Comparisons</h2>
+        <div class="content has-text-justified" style="max-width:48rem;margin:0 auto;">
+          <p>
+            ExDark real-world low-light detection: original input, MambaSFLNet (IROS 2025 SOTA),
+            and our generative neural sensor.
+          </p>
+        </div>
+
+        <div class="exdark-controls">
+          <label for="exdark-sample" style="font-size:0.9rem;color:#555;">Sample</label>
+          <select id="exdark-sample"></select>
+        </div>
+
+        <div class="cmp-grid">
+          <div class="cmp-cell">
+            <img id="exdark-org" src="./static/images/exdark/2015_02344_org_inset.jpg" alt="Original low-light">
+            <div class="cmp-title">Original</div>
+          </div>
+          <div class="cmp-cell">
+            <img id="exdark-mamba" src="./static/images/exdark/2015_02344_mamba_inset.jpg" alt="MambaSFLNet">
+            <div class="cmp-title">MambaSFLNet</div>
+          </div>
+          <div class="cmp-cell">
+            <img id="exdark-our" src="./static/images/exdark/2015_02344_our_inset.jpg" alt="Ours">
+            <div class="cmp-title">Ours</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="carla" style="padding-top:0;">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-full">
+        <h2 class="title is-3">Closed-Loop CARLA (Thunderhill)</h2>
+        <div class="content has-text-justified" style="max-width:48rem;margin:0 auto;">
+          <p>
+            Identical obstacle seeds across Day / Sunset / Night. YOLO is daylight-trained;
+            the generative sensor maps degraded frames back into the detector’s operating domain.
+          </p>
+        </div>
+        <div class="condition-toggle" role="tablist" aria-label="Lighting condition">
+          <button type="button" data-carla="night" class="is-active">Night</button>
+          <button type="button" data-carla="sunset">Sunset</button>
+          <button type="button" data-carla="day">Day</button>
+        </div>
+        <p class="figure-caption has-text-centered" id="carla-label" style="margin-top:0.5rem;"></p>
+        <div class="cmp-pair">
+          <div class="cmp-cell">
+            <img id="carla-raw" src="./static/images/carla/night_progress_020p_raw_frame_000477.png" alt="Raw camera">
+            <div class="cmp-title">Raw camera</div>
+          </div>
+          <div class="cmp-cell">
+            <img id="carla-relit" src="./static/images/carla/night_progress_020p_relit_frame_000477.png" alt="Relit">
+            <div class="cmp-title">Neural sensor output</div>
+          </div>
+        </div>
+        <img src="./static/images/carla/birdsview.png"
+             alt="Thunderhill track in CARLA"
+             style="width:100%; max-width:720px; display:block; margin:2rem auto 0; border-radius:10px; border:1px solid #e4e4e4;">
+        <p class="figure-caption" style="max-width:720px; margin:0.5rem auto 0;">
+          Virtual Thunderhill Raceway — closed-loop evaluation environment.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="results">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Results</h2>
+        <div class="content has-text-justified">
+          <p>
+            Selected tables from the paper. Best in red, second-best in blue.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <h3 class="title is-5 has-text-centered" style="margin-top:0.5rem;">ExDark mean AP (subset)</h3>
+    <div class="table-scroll">
+      <table class="results-table" style="max-width:900px; margin:auto;">
+        <thead>
+          <tr>
+            <th>Method</th>
+            <th>Bicycle</th>
+            <th>Car</th>
+            <th>Dog</th>
+            <th>People</th>
+            <th>Mean</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>RetinexNet</td><td>0.790</td><td>0.820</td><td>0.721</td><td>0.784</td><td>0.736</td>
+          </tr>
+          <tr>
+            <td>MambaSFLNet</td>
+            <td class="cell-second">0.821</td>
+            <td>0.824</td>
+            <td>0.779</td>
+            <td>0.809</td>
+            <td class="cell-second">0.766</td>
+          </tr>
+          <tr>
+            <td>Ours</td>
+            <td class="cell-best">0.886</td>
+            <td class="cell-best">0.878</td>
+            <td class="cell-best">0.933</td>
+            <td class="cell-best">0.851</td>
+            <td class="cell-best">0.871</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="figure-caption" style="max-width:900px; margin:0.25rem auto 1.75rem;">
+      Full 12-category table in the paper — Ours leads every category.
+    </p>
+
+    <h3 class="title is-5 has-text-centered">vKITTI2 domain gap (Fog)</h3>
+    <div class="table-scroll">
+      <table class="results-table" style="max-width:720px; margin:auto;">
+        <thead>
+          <tr>
+            <th>Method</th>
+            <th>F1</th>
+            <th>mAP@50</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Baseline</td><td>0.681</td><td>0.544</td></tr>
+          <tr><td>CLAHE</td><td class="cell-second">0.781</td><td class="cell-second">0.635</td></tr>
+          <tr><td>MambaSFLNet</td><td>0.579</td><td>0.452</td></tr>
+          <tr><td>Ours</td><td class="cell-best">0.855</td><td class="cell-best">0.807</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="figure-caption" style="max-width:720px; margin:0.25rem auto 1.75rem;">
+      Pixel-reconstruction SOTA degrades below the unenhanced baseline under fog.
+    </p>
+
+    <h3 class="title is-5 has-text-centered">Navigation safety (5 laps, MPC_DLC)</h3>
+    <div class="table-scroll">
+      <table class="results-table" style="max-width:820px; margin:auto;">
+        <thead>
+          <tr>
+            <th>Method</th>
+            <th>Collisions</th>
+            <th>Rate (%)</th>
+            <th>Latency</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Daytime (Oracle)</td><td>20.4 ± 2.4</td><td>22.47 ± 3.07</td><td>1.7 ms</td></tr>
+          <tr><td>Dark (No Fix)</td><td>29.6 ± 3.6</td><td>32.61 ± 4.50</td><td>1.7 ms</td></tr>
+          <tr><td>Dark + CLAHE</td><td>31.4 ± 4.1</td><td>34.39 ± 3.64</td><td>2.0 ms</td></tr>
+          <tr><td>Dark + Gen. (Ours)</td><td class="cell-best">22.0 ± 7.2</td><td class="cell-best">24.55 ± 6.30</td><td>62.0 ms</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="figure-caption" style="max-width:820px; margin:0.25rem auto 1.75rem;">
+      Generative sensing restores near-daylight collision margins under night.
+    </p>
+
+    <h3 class="title is-5 has-text-centered">Event-driven triggering (Sunset)</h3>
+    <div class="table-scroll">
+      <table class="results-table" style="max-width:820px; margin:auto;">
+        <thead>
+          <tr>
+            <th>Mode</th>
+            <th>Collisions</th>
+            <th>Frames Relit</th>
+            <th>Latency</th>
+            <th>GPU Util</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Continuous Relight</td><td>30.4 ± 2.2</td><td>100%</td><td>62.0 ms</td><td>95.0%</td></tr>
+          <tr>
+            <td>Event-Driven (τ=0.3)</td>
+            <td class="cell-best">23.4 ± 2.1</td>
+            <td class="cell-best">0.4%</td>
+            <td class="cell-best">2.0 ms</td>
+            <td class="cell-best">0.4%</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="figure-caption" style="max-width:820px; margin:0.25rem auto 1.5rem;">
+      Sparse activation is both cheaper and safer when lighting is only partially degraded.
+    </p>
+
+    <img src="./static/images/academic_confidence_histogram.png"
+         alt="Detection confidence histogram with activation thresholds"
+         style="width:100%; max-width:720px; display:block; margin:0 auto;">
+    <p class="figure-caption" style="max-width:720px; margin:0.5rem auto 0;">
+      Confidence histogram over a low-light lap; dashed lines mark τ<sub>low</sub>=0.3 and τ<sub>high</sub>=0.5.
+    </p>
+  </div>
+</section>
+
+<section class="section" id="code">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3 has-text-centered">Code &amp; Simulator</h2>
+        <div class="content has-text-justified">
+          <p>
+            Closed-loop CARLA Thunderhill stack, relighting service, MPC_DLC controller, and
+            paired A/B evaluation scripts:
+          </p>
+          <p class="has-text-centered" style="margin-top:1rem;">
+            <a class="button is-dark is-rounded"
+               href="https://github.com/jayhsu0627/Wolverine_CARLA_Thunderhill"
+               target="_blank" rel="noopener">
+              <span class="icon"><i class="fab fa-github"></i></span>
+              <span>jayhsu0627/Wolverine_CARLA_Thunderhill</span>
+            </a>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="BibTeX">
+  <div class="container is-max-desktop content">
+    <h2 class="title">BibTeX</h2>
+    <div class="bibtex-block">
+      <button id="copy-bibtex" class="button is-small is-rounded copy" type="button">Copy</button>
+      <pre class="bibtex" id="bibtex">@inproceedings{xu2026neuralsensor,
+  title     = {Real-Time Diffusion Relighting as a Neural Sensor:
+               Closing the Low-Light Domain Gap for Robotic Perception},
+  author    = {Xu, Shengjie and Gao, Alexander and Rai, Anshul and
+               Lee, Dae Yeol and Su, Guan-Ming and Lin, Ming C.},
+  booktitle = {IEEE/RSJ International Conference on Intelligent Robots
+               and Systems (IROS)},
+  year      = {2026}
+}</pre>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <div class="content has-text-centered">
+      <p>
+        Generative Neural Sensor · Accepted to IROS 2026.<br>
+        Website template borrowed from
+        <a href="https://github.com/nerfies/nerfies.github.io">Nerfies</a>
+        (via local MATS project page style).
+      </p>
+    </div>
+  </div>
+</footer>
+
+<script src="./static/js/index.js"></script>
+</body>
+</html>
