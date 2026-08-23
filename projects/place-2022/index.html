@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <title>r/place 2022 — Timelapse</title>
-<link rel="icon" href="place_2022.svg" type="image/svg+xml">
+<link rel="icon" href="/projects/place-2022/place_2022.svg" type="image/svg+xml">
 <style>
   :root { --bg:#0d0d10; --panel:#16161c; --line:#2a2a34; --fg:#e6e6ea; --dim:#8a8a99; --accent:#ff4500; --accent2:#ffa800; }
   * { box-sizing: border-box; }
@@ -122,8 +122,8 @@
   <div class="dim" id="bootm" style="margin-top:10px">meta</div></div></div>
 
 <script type="module">
-import * as THREE from './vendor/three.module.js';
-import { makeBitmap, toPNG, toPDF, downloadBlob, maxScale } from './export.js';
+import * as THREE from '/projects/place-2022/lib/three.module.js';
+import { makeBitmap, toPNG, toPDF, downloadBlob, maxScale } from '/projects/place-2022/export.js';
 
 const $ = id => document.getElementById(id);
 const bootf = $('bootf'), bootm = $('bootm');
