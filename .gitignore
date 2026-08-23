@@ -10,4 +10,4 @@ Gemfile.lock
 node_modules
 package.json
 favicon.ico
-vendor/
+/vendor/
