@@ -1,0 +1,10 @@
+---
+layout: post
+title: "r/place 2022 Timelapse"
+date: 2026-08-23
+image: /images/place_2022.svg
+categories: personal
+website: /projects/place-2022/
+---
+
+160M pixels. Every second of the canvas, seekable.

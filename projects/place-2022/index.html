@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>r/place 2022 — Timelapse</title>
+<link rel="icon" href="place_2022.svg" type="image/svg+xml">
+<style>
+  :root { --bg:#0d0d10; --panel:#16161c; --line:#2a2a34; --fg:#e6e6ea; --dim:#8a8a99; --accent:#ff4500; --accent2:#ffa800; }
+  * { box-sizing: border-box; }
+  html, body { margin:0; height:100%; background:var(--bg); color:var(--fg);
+               font:13px/1.4 ui-monospace, SFMono-Regular, Menlo, monospace; overflow:hidden; }
+  #view { position:fixed; inset:0; }
+  #view canvas { display:block; }
+  #hud { position:fixed; left:0; right:0; bottom:0; background:linear-gradient(transparent,var(--panel) 22px);
+         border-top:1px solid var(--line); padding:10px 14px 12px; backdrop-filter:blur(6px); }
+  #scrub { width:100%; margin:0 0 8px; accent-color:var(--accent); cursor:pointer; }
+  .row { display:flex; align-items:center; gap:14px; flex-wrap:wrap; }
+  button { background:#22222c; color:var(--fg); border:1px solid var(--line); border-radius:5px;
+           padding:5px 12px; cursor:pointer; font:inherit; }
+  button:hover { border-color:var(--accent); }
+  #clock { font-size:15px; font-weight:600; letter-spacing:.3px; min-width:210px; }
+  .dim { color:var(--dim); }
+  #stats { position:fixed; top:10px; left:12px; background:rgba(16,16,22,.82); border:1px solid var(--line);
+           border-radius:6px; padding:8px 11px; line-height:1.7; pointer-events:none; }
+  #stats b { color:var(--accent); font-weight:600; }
+  #boot { position:fixed; inset:0; display:grid; place-items:center; background:var(--bg); z-index:9;
+          text-align:center; transition:opacity .4s; }
+  #boot .b { width:300px; height:3px; background:#26262e; border-radius:2px; margin:14px auto 0; overflow:hidden; }
+  #boot .f { height:100%; width:0; background:var(--accent); transition:width .2s; }
+  #tip { position:fixed; display:none; z-index:8; pointer-events:none; white-space:nowrap;
+         background:rgba(16,16,22,.94); border:1px solid var(--line); border-radius:6px;
+         padding:5px 9px; font-size:12px; line-height:1.5; box-shadow:0 3px 12px rgba(0,0,0,.5); }
+  #tip b { color:var(--accent); font-weight:600; }
+  #tip .sw { display:inline-block; width:10px; height:10px; margin:0 5px 0 9px;
+             border:1px solid #555; border-radius:2px; vertical-align:baseline; }
+  /* coordinate jump — reddit orange */
+  .lbl-go { color:var(--accent); font-weight:600; }
+  #goto { background:#241408; color:var(--fg); border:1px solid var(--accent); border-radius:5px;
+          padding:4px 8px; font:inherit; width:120px; }
+  #goto::placeholder { color:#a97245; }
+  #goto:focus { outline:none; border-color:var(--accent);
+                box-shadow:0 0 0 2px rgba(255,69,0,.28); }
+  #goto.bad { border-color:#c0392b; box-shadow:none; }
+  #gobtn { background:var(--accent); border-color:var(--accent); color:#1a0a02; font-weight:600; }
+  #gobtn:hover { background:#ff5f22; border-color:#ff5f22; }
+  /* share link — same family, shifted to amber */
+  #link { background:var(--accent2); border-color:var(--accent2); color:#1e1400; font-weight:600; }
+  #link:hover { background:#ffbb35; border-color:#ffbb35; }
+  #modal { position:fixed; inset:0; z-index:12; background:rgba(6,6,9,.72); display:none;
+           place-items:center; backdrop-filter:blur(3px); }
+  #modal.on { display:grid; }
+  #modal .panel { background:var(--panel); border:1px solid var(--line); border-radius:10px;
+                  padding:18px 20px; min-width:340px; box-shadow:0 10px 40px rgba(0,0,0,.6); }
+  #modal h3 { margin:0 0 14px; font-size:14px; font-weight:600; }
+  #modal label { display:flex; justify-content:space-between; align-items:center;
+                 gap:14px; margin-bottom:9px; color:var(--dim); }
+  #modal label.chk { justify-content:flex-start; gap:8px; }
+  #modal select { min-width:180px; }
+  #ex-info { margin:12px 0 4px; font-size:12px; min-height:32px; line-height:1.5; }
+  #modal .btns { display:flex; justify-content:flex-end; gap:8px; margin-top:6px; }
+  #modal .pri { border-color:var(--accent); background:#2a1a12; }
+  select, input[type=range] { font:inherit; }
+  select { background:#22222c; color:var(--fg); border:1px solid var(--line); border-radius:5px; padding:4px 8px; }
+</style>
+</head>
+<body>
+<div id="view"></div>
+<div id="tip"></div>
+<div id="stats">
+  <div>pixels placed <b id="s-count">0</b></div>
+  <div>rate <b id="s-rate">0</b> px/s</div>
+  <div class="dim" id="s-zoom">zoom 1.0×</div>
+  <div class="dim" id="s-mark"></div>
+</div>
+<div id="hud">
+  <input id="scrub" type="range" min="0" max="1000" value="0" step="1">
+  <div class="row">
+    <button id="play">▶ Play</button>
+    <span id="clock">—</span>
+    <label class="dim">speed
+      <select id="speed">
+        <option value="60">60× (~83 min)</option>
+        <option value="300">300× (~17 min)</option>
+        <option value="900" selected>900× (~5.5 min)</option>
+        <option value="1800">1800× (~2.8 min)</option>
+        <option value="3600">3600× (~83 s)</option>
+      </select>
+    </label>
+    <span class="dim" id="net">idle</span>
+    <label class="lbl-go">go to
+      <input id="goto" type="text" placeholder="x, y[, zoom]" size="13" spellcheck="false">
+    </label>
+    <button id="gobtn">Jump</button>
+    <button id="link">🔗 Link</button>
+    <button id="expbtn">⤓ Save</button>
+    <span class="dim">click = play/pause · scroll = zoom · drag = pan · <b>F</b> = fit · <b>C</b> = crosshair</span>
+  </div>
+</div>
+<div id="modal"><div class="panel">
+  <h3>Save this frame</h3>
+  <label>Region <select id="ex-region">
+    <option value="view">Current view</option>
+    <option value="full">Full canvas 2000×2000</option></select></label>
+  <label>Scale <select id="ex-scale">
+    <option value="1">1× (native pixels)</option>
+    <option value="2" selected>2×</option>
+    <option value="4">4×</option>
+    <option value="8">8×</option></select></label>
+  <label>Format <select id="ex-fmt">
+    <option value="png">PNG — lossless</option>
+    <option value="pdf">PDF — print / poster</option></select></label>
+  <label id="ex-pagewrap" style="display:none">Page <select id="ex-page">
+    <option value="exact">Exact size @ 300 DPI</option>
+    <option value="a2">A2</option><option value="a3" selected>A3</option>
+    <option value="a4">A4</option><option value="letter">Letter</option></select></label>
+  <label class="chk"><input type="checkbox" id="ex-cap" checked> caption with UTC timestamp</label>
+  <div id="ex-info" class="dim"></div>
+  <div class="btns"><button id="ex-close">Cancel</button><button id="ex-go" class="pri">Save</button></div>
+</div></div>
+<div id="boot"><div><div style="font-size:15px">loading r/place dataset…</div>
+  <div class="b"><div class="f" id="bootf"></div></div>
+  <div class="dim" id="bootm" style="margin-top:10px">meta</div></div></div>
+
+<script type="module">
+import * as THREE from './vendor/three.module.js';
+import { makeBitmap, toPNG, toPDF, downloadBlob, maxScale } from './export.js';
+
+const $ = id => document.getElementById(id);
+const bootf = $('bootf'), bootm = $('bootm');
+const setBoot = (p, m) => { bootf.style.width = (p*100)+'%'; if (m) bootm.textContent = m; };
+
+// ---------------------------------------------------------------- data
+// R2 by default (site preview + production). Local pipeline: serve.py on :8787 → ./data.
+// Override: ?data=https://… or ?data=data
+const R2 = 'https://place-data.shengjie-xu.com';
+const override = new URLSearchParams(location.search).get('data');
+const useLocal = !override && location.port === '8787';
+const DATA = (override || (useLocal ? 'data' : R2)).replace(/\/$/, '');
+
+setBoot(.05, 'meta.json');
+const meta    = await (await fetch(`${DATA}/meta.json`)).json();
+const palHex  = await (await fetch(`${DATA}/palette.json`)).json();
+const W = meta.width, H = meta.height;
+const KF = meta.keyframe_interval_s, DUR = meta.duration_s;
+const T0 = meta.t0_ms_since_2022_04_01;
+const EPOCH = Date.UTC(2022, 3, 1);                     // 2022-04-01T00:00:00Z
+
+setBoot(.15, 'index.u32 (second → event offset)');
+const index = new Uint32Array(await (await fetch(`${DATA}/index.u32`)).arrayBuffer());
+
+// palette texture: 256 entries, slot 255 = "never painted"
+const palData = new Uint8Array(256 * 4);
+palHex.forEach((h, i) => {
+  palData[i*4]   = parseInt(h.slice(1,3), 16);
+  palData[i*4+1] = parseInt(h.slice(3,5), 16);
+  palData[i*4+2] = parseInt(h.slice(5,7), 16);
+  palData[i*4+3] = 255;
+});
+palData[255*4] = 255; palData[255*4+1] = 255; palData[255*4+2] = 255; palData[255*4+3] = 255;
+const palRGB = new Uint8Array(256 * 3).fill(255);
+palHex.forEach((h, i) => {
+  palRGB[i*3] = parseInt(h.slice(1,3),16);
+  palRGB[i*3+1] = parseInt(h.slice(3,5),16);
+  palRGB[i*3+2] = parseInt(h.slice(5,7),16);
+});
+const palTex = new THREE.DataTexture(palData, 256, 1, THREE.RGBAFormat);
+palTex.needsUpdate = true;
+
+// canvas index buffer + texture
+const canvasIdx = new Uint8Array(W * H).fill(255);
+const idxTex = new THREE.DataTexture(canvasIdx, W, H, THREE.RedFormat, THREE.UnsignedByteType);
+idxTex.magFilter = THREE.NearestFilter;
+idxTex.minFilter = THREE.NearestFilter;      // NEVER interpolate palette indices
+idxTex.generateMipmaps = false;
+idxTex.needsUpdate = true;
+
+// ---------------------------------------------------------------- scene
+const view = $('view');
+const renderer = new THREE.WebGLRenderer({ antialias: false, powerPreference: 'high-performance' });
+renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+view.appendChild(renderer.domElement);
+
+const scene = new THREE.Scene();
+scene.background = new THREE.Color(0x0d0d10);
+const camera = new THREE.OrthographicCamera(-1, 1, 1, -1, -10, 10);
+
+// Pass 1 target: the palette-resolved canvas in true colour. Mipmapping this is correct;
+// mipmapping the index texture is not (it averages indices, producing arbitrary colours).
+const rt = new THREE.WebGLRenderTarget(W, H, {
+  format: THREE.RGBAFormat, type: THREE.UnsignedByteType,
+  magFilter: THREE.NearestFilter,               // crisp pixel edges when zoomed in
+  minFilter: THREE.LinearMipmapLinearFilter,    // correct colour averaging when zoomed out
+  generateMipmaps: true, depthBuffer: false, stencilBuffer: false
+});
+const resolveScene = new THREE.Scene();
+const resolveCam = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
+const resolveMat = new THREE.ShaderMaterial({
+  uniforms: { uIndex: { value: idxTex }, uPal: { value: palTex } },
+  vertexShader: `
+    varying vec2 vUv;
+    void main(){ vUv = uv; gl_Position = vec4(position.xy, 0.0, 1.0); }`,
+  fragmentShader: `
+    precision highp float;
+    uniform sampler2D uIndex, uPal;
+    varying vec2 vUv;
+    void main(){
+      float i = texture2D(uIndex, vUv).r * 255.0;
+      gl_FragColor = texture2D(uPal, vec2((floor(i + 0.5) + 0.5)/256.0, 0.5));
+    }`
+});
+resolveScene.add(new THREE.Mesh(new THREE.PlaneGeometry(2, 2), resolveMat));
+function resolveCanvas(){                       // only when pixels actually changed
+  renderer.setRenderTarget(rt);
+  renderer.render(resolveScene, resolveCam);
+  renderer.setRenderTarget(null);               // three regenerates the mipmap chain here
+}
+
+const mat = new THREE.ShaderMaterial({
+  uniforms: {
+    uCanvas: { value: rt.texture },
+    uHover: { value: new THREE.Vector2(-1, -1) },   // hovered pixel, -1 = none
+    uSize:  { value: new THREE.Vector2(W, H) },
+    uInvZoom: { value: 1 },                          // canvas px per screen px
+    uCross: { value: 1 }                             // crosshair on/off
+  },
+  vertexShader: `
+    varying vec2 vUv;
+    void main(){ vUv = uv; gl_Position = projectionMatrix * modelViewMatrix * vec4(position,1.0); }`,
+  fragmentShader: `
+    precision highp float;
+    uniform sampler2D uCanvas;
+    uniform vec2 uHover, uSize;
+    uniform float uInvZoom, uCross;
+    varying vec2 vUv;
+    void main(){
+      vec2 uv = vec2(vUv.x, 1.0 - vUv.y);          // r/place y=0 is the top row
+      vec3 col = texture2D(uCanvas, uv).rgb;       // already palette-resolved in pass 1
+
+      if (uHover.x >= 0.0) {
+        vec2 texel = vec2(vUv.x, 1.0 - vUv.y) * uSize;   // canvas pixel coords, y down
+        vec2 hc = floor(uHover) + 0.5;                   // hovered pixel centre
+        float w = max(uInvZoom, 0.0001);                 // 1 screen px, in canvas units
+
+        // full-canvas crosshair: visible at any zoom, unlike a sub-pixel outline
+        if (uCross > 0.5 &&
+            (abs(texel.x - hc.x) < w * 0.5 || abs(texel.y - hc.y) < w * 0.5))
+          col = mix(col, vec3(1.0, 0.27, 0.0), 0.55);
+
+        // outline the hovered pixel, constant ~2px width on screen
+        if (floor(texel) == floor(uHover)) {
+          vec2 f = fract(texel);
+          float e = min(min(f.x, 1.0 - f.x), min(f.y, 1.0 - f.y));
+          if (e < w)          col = vec3(0.0);
+          else if (e < w*2.0) col = vec3(1.0);
+        }
+      }
+      gl_FragColor = vec4(col, 1.0);
+    }`
+});
+scene.add(new THREE.Mesh(new THREE.PlaneGeometry(W, H), mat));
+
+// ---------------------------------------------------------------- camera control
+let zoom = 1, cx = W/2, cy = H/2;
+function fit(){ zoom = Math.min(innerWidth/W, (innerHeight-70)/H) * 0.95; cx = W/2; cy = H/2; }
+function resize(){
+  const w = innerWidth, h = innerHeight;
+  renderer.setSize(w, h);
+  camera.left = -w/2/zoom; camera.right = w/2/zoom;
+  camera.top = h/2/zoom;   camera.bottom = -h/2/zoom;
+  camera.position.set(cx - W/2, -(cy - H/2), 1);
+  camera.updateProjectionMatrix();
+  mat.uniforms.uInvZoom.value = 1 / zoom;
+  syncHash();
+  $('s-zoom').textContent = 'zoom ' + zoom.toFixed(zoom < 1 ? 2 : 1) + '×';
+}
+addEventListener('resize', resize);
+renderer.domElement.addEventListener('wheel', e => {
+  e.preventDefault();
+  const r = renderer.domElement.getBoundingClientRect();
+  const mx = e.clientX - r.left - innerWidth/2, my = e.clientY - r.top - innerHeight/2;
+  const wx = cx + mx/zoom, wy = cy + my/zoom;                 // world point under cursor
+  zoom = Math.min(40, Math.max(0.05, zoom * Math.exp(-e.deltaY * 0.0015)));
+  cx = wx - mx/zoom; cy = wy - my/zoom;                       // keep it pinned
+  resize();
+}, { passive: false });
+let drag = null, downPt = null, moved = false;
+renderer.domElement.addEventListener('pointerdown', e => {
+  if (e.button !== 0) return;
+  downPt = { x: e.clientX, y: e.clientY, id: e.pointerId };
+  drag = { x: e.clientX, y: e.clientY };
+  moved = false;
+});
+renderer.domElement.addEventListener('pointermove', e => {
+  if (drag) {
+    if (!moved && Math.hypot(e.clientX - downPt.x, e.clientY - downPt.y) > 4) {
+      moved = true;                                    // only now is it a drag, not a click
+      try { renderer.domElement.setPointerCapture(downPt.id); } catch (_) {}
+    }
+    if (moved) {
+      cx -= (e.clientX - drag.x)/zoom; cy -= (e.clientY - drag.y)/zoom;
+      drag = { x: e.clientX, y: e.clientY }; resize();
+    }
+  }
+  updateHover(e.clientX, e.clientY);
+});
+renderer.domElement.addEventListener('pointerleave', clearHover);
+
+// screen -> canvas pixel (same mapping the wheel handler uses)
+const tip = $('tip');
+function updateHover(clientX, clientY){
+  const r = renderer.domElement.getBoundingClientRect();
+  const px = Math.floor(cx + (clientX - r.left - innerWidth/2) / zoom);
+  const py = Math.floor(cy + (clientY - r.top - innerHeight/2) / zoom);
+  if (px < 0 || py < 0 || px >= W || py >= H) { clearHover(); return; }
+
+  mat.uniforms.uHover.value.set(px, py);
+  const idx = canvasIdx[py * W + px];
+  const hex = idx === 255 ? null : palHex[idx];
+  tip.innerHTML =
+    `<b>${px}, ${py}</b><span class="sw" style="background:${hex || '#fff'}"></span>` +
+    (hex ? hex : '<span class="dim">unpainted</span>');
+  tip.style.display = 'block';
+  // flip the tip to the other side of the cursor near the viewport edge
+  const tw = tip.offsetWidth, th = tip.offsetHeight;
+  let tx = clientX + 16, ty = clientY + 16;
+  if (tx + tw > innerWidth - 8)  tx = clientX - tw - 16;
+  if (ty + th > innerHeight - 8) ty = clientY - th - 16;
+  tip.style.left = tx + 'px'; tip.style.top = ty + 'px';
+}
+function clearHover(){
+  mat.uniforms.uHover.value.set(-1, -1);
+  tip.style.display = 'none';
+}
+function endPointer(){
+  if (downPt) { try { renderer.domElement.releasePointerCapture(downPt.id); } catch (_) {} }
+  const wasClick = drag && !moved;                     // pressed and released without panning
+  drag = null; downPt = null; moved = false;
+  if (wasClick) toggle();                              // click the canvas = play/pause
+}
+addEventListener('pointerup', endPointer);
+addEventListener('pointercancel', endPointer);
+addEventListener('keydown', e => {
+  const t = e.target;                                  // ignore shortcuts while typing / on a focused control
+  if (t && (t.tagName === 'INPUT' || t.tagName === 'SELECT' || t.isContentEditable)) return;
+  if (e.key === 'f' || e.key === 'F') { fit(); resize(); }
+  if (e.code === 'Space') { e.preventDefault(); toggle(); }
+  if (e.key === 'Escape') $('modal').classList.remove('on');
+  if (e.key === 'c' || e.key === 'C')
+    mat.uniforms.uCross.value = mat.uniforms.uCross.value > 0.5 ? 0 : 1;
+});
+
+// ---------------------------------------------------------------- shareable link
+function viewHash(){
+  return `#x=${Math.round(cx)}&y=${Math.round(cy)}&z=${+zoom.toFixed(3)}&t=${Math.round(curSec)}`;
+}
+function shareUrl(){ return location.origin + location.pathname + viewHash(); }
+let hashAt = 0;
+function syncHash(){                                  // throttled; replaceState avoids hashchange
+  const t = performance.now();
+  if (t - hashAt < 1000) return;   // browsers rate-limit replaceState
+  hashAt = t;
+  try { history.replaceState(null, '', viewHash()); } catch (_) {}
+}
+function readHash(){
+  const q = new URLSearchParams(location.hash.slice(1));
+  const num = k => q.has(k) && isFinite(+q.get(k)) ? +q.get(k) : null;
+  return { x: num('x'), y: num('y'), z: num('z'), t: num('t') };
+}
+$('link').onclick = async () => {
+  const url = shareUrl();
+  try { await navigator.clipboard.writeText(url); $('link').textContent = '✓ Copied'; }
+  catch (_) { window.prompt('Copy this link:', url); }
+  setTimeout(() => $('link').textContent = '🔗 Link', 1400);
+  $('link').blur();
+};
+
+// ---------------------------------------------------------------- save frame
+function currentRegion(){
+  const hw = innerWidth/2/zoom, hh = innerHeight/2/zoom;
+  const x0 = Math.max(0, Math.floor(cx - hw)), y0 = Math.max(0, Math.floor(cy - hh));
+  const x1 = Math.min(W, Math.ceil(cx + hw)), y1 = Math.min(H, Math.ceil(cy + hh));
+  return { x0, y0, rw: Math.max(1, x1-x0), rh: Math.max(1, y1-y0) };
+}
+function stampUTC(){
+  return new Date(EPOCH + T0 + curSec*1000).toISOString().replace('T',' ').slice(0,19) + 'Z';
+}
+function exPlan(){
+  const r = $('ex-region').value === 'full' ? { x0:0, y0:0, rw:W, rh:H } : currentRegion();
+  const want = Number($('ex-scale').value);
+  const scale = Math.min(want, maxScale(r.rw, r.rh));
+  return { r, scale, clamped: scale < want };
+}
+function updateExInfo(){
+  const { r, scale, clamped } = exPlan();
+  const pdf = $('ex-fmt').value === 'pdf';
+  $('ex-pagewrap').style.display = pdf ? 'flex' : 'none';
+  const w = r.rw*scale, h = r.rh*scale;
+  $('ex-info').innerHTML =
+    `region <b>${r.rw}×${r.rh}</b> px at (${r.x0}, ${r.y0}) → output <b>${w}×${h}</b>` +
+    (clamped ? `<br><span style="color:#e8a33d">scale reduced to ${scale}× (browser canvas limit)</span>` : '') +
+    (pdf ? `<br>image embedded losslessly, no smoothing` : '') +
+    `<br>${stampUTC()}`;
+}
+['ex-region','ex-scale','ex-fmt','ex-page','ex-cap'].forEach(id =>
+  $(id).addEventListener('change', updateExInfo));
+$('expbtn').onclick = () => { updateExInfo(); $('modal').classList.add('on'); $('expbtn').blur(); };
+$('ex-close').onclick = () => $('modal').classList.remove('on');
+$('modal').addEventListener('click', e => { if (e.target.id === 'modal') $('modal').classList.remove('on'); });
+
+$('ex-go').onclick = async () => {
+  const btn = $('ex-go');
+  btn.disabled = true; btn.textContent = 'Rendering…';
+  try {
+    const { r, scale } = exPlan();
+    const stamp = stampUTC();
+    const caption = $('ex-cap').checked
+      ? `${stamp}   x ${r.x0}-${r.x0+r.rw-1}, y ${r.y0}-${r.y0+r.rh-1}` : '';
+    const cnv = makeBitmap({ idx: canvasIdx, palRGB, W, ...r, scale, caption });
+    const base = `rplace_${stamp.replace(/[: ]/g,'-').replace('Z','')}_x${r.x0}y${r.y0}`;
+    if ($('ex-fmt').value === 'png'){
+      downloadBlob(await toPNG(cnv), base + '.png');
+    } else {
+      btn.textContent = 'Compressing…';
+      downloadBlob(await toPDF(cnv, { page: $('ex-page').value, dpi: 300,
+                                      title: `r/place ${stamp}` }), base + '.pdf');
+    }
+    $('modal').classList.remove('on');
+  } catch (err) {
+    console.error(err);
+    $('ex-info').innerHTML = `<span style="color:#e05252">export failed: ${err.message}</span>`;
+  } finally { btn.disabled = false; btn.textContent = 'Save'; }
+};
+
+// ---------------------------------------------------------------- jump to coordinate
+const gotoEl = $('goto');
+function goTo(str){
+  // accepts "826,1048", "826 1048", or "826,1048,12" (trailing zoom)
+  const m = String(str).trim().match(/^(\d{1,4})\s*[,\s]\s*(\d{1,4})(?:\s*[,\s]\s*(\d+(?:\.\d+)?))?$/);
+  if (!m) return false;
+  const px = +m[1], py = +m[2];
+  if (px >= W || py >= H) return false;
+  cx = px + 0.5; cy = py + 0.5;                        // centre the pixel, not its corner
+  zoom = m[3] ? Math.min(40, Math.max(0.05, +m[3])) : Math.max(zoom, 8);
+  resize();
+  mat.uniforms.uHover.value.set(px, py);               // leave the marker sitting on the target
+  const idx = canvasIdx[py * W + px];
+  $('s-mark').innerHTML = `marked <b>${px}, ${py}</b> ` +
+    (idx === 255 ? 'unpainted' : palHex[idx]);
+  return true;
+}
+function submitGoto(){
+  const ok = goTo(gotoEl.value);
+  gotoEl.classList.toggle('bad', !ok);
+  if (ok) gotoEl.blur();
+}
+gotoEl.addEventListener('keydown', e => {
+  e.stopPropagation();                                 // keep F / C / Space out of the text box
+  if (e.key === 'Enter') submitGoto();
+});
+gotoEl.addEventListener('input', () => gotoEl.classList.remove('bad'));
+$('gobtn').onclick = submitGoto;
+
+// ---------------------------------------------------------------- event streaming
+// events.u32 is ~642 MB; pull it in windows via HTTP Range instead of loading it all.
+const CHUNK = 1 << 22;                                  // 4 M events (16 MB) per request
+let buf = null, bufFrom = 0, bufTo = 0, fetching = null;
+
+async function ensure(from){
+  if (buf && from >= bufFrom && from < bufTo) return;
+  if (fetching) await fetching;
+  if (buf && from >= bufFrom && from < bufTo) return;
+  if (from >= meta.events) return;
+  const start = from, end = Math.min(meta.events, start + CHUNK);
+  $('net').textContent = 'loading…';
+  fetching = fetch(`${DATA}/events.u32`, {
+    headers: { Range: `bytes=${start*4}-${end*4-1}` }
+  }).then(r => r.arrayBuffer()).then(ab => {
+    buf = new Uint32Array(ab); bufFrom = start; bufTo = start + buf.length;
+    $('net').textContent = 'ready'; fetching = null;
+  });
+  await fetching;
+}
+
+function applyRange(a, b){                              // paint events [a,b) into canvasIdx
+  const off = a - bufFrom;
+  const n = b - a;
+  for (let k = 0; k < n; k++){
+    const v = buf[off + k];
+    canvasIdx[(((v >>> 11) & 0x7FF) * W) + (v & 0x7FF)] = v >>> 22;
+  }
+}
+
+// ---------------------------------------------------------------- playback
+let curSec = 0, cursor = 0, playing = false, dirty = true;
+
+async function seek(sec){
+  sec = Math.max(0, Math.min(DUR, Math.round(sec)));
+  const kfSec = Math.floor(sec / KF) * KF;
+  const kfBuf = await (await fetch(`${DATA}/keyframes/kf-${String(kfSec).padStart(6,'0')}.bin`)).arrayBuffer();
+  canvasIdx.set(new Uint8Array(kfBuf));
+  cursor = index[kfSec];
+  curSec = kfSec;
+  await advanceTo(sec);
+}
+
+async function advanceTo(sec){
+  sec = Math.max(0, Math.min(DUR, sec));
+  const target = index[Math.floor(sec)];   // curSec is fractional; typed arrays need an int key
+  while (cursor < target){
+    await ensure(cursor);
+    const stop = Math.min(target, bufTo);
+    applyRange(cursor, stop);
+    cursor = stop;
+  }
+  curSec = sec;
+  dirty = true;
+  updateHud();
+}
+
+function updateHud(){
+  const d = new Date(EPOCH + T0 + curSec * 1000);
+  $('clock').textContent = d.toISOString().replace('T',' ').slice(0,19) + 'Z';
+  $('s-count').textContent = cursor.toLocaleString();
+  $('scrub').value = String(Math.round(curSec / DUR * 1000));
+  syncHash();
+}
+
+let lastWall = 0, lastCursor = 0, lastRateT = 0;
+function toggle(){
+  playing = !playing;
+  $('play').textContent = playing ? '❚❚ Pause' : '▶ Play';
+  lastWall = performance.now();
+}
+$('play').onclick = () => { toggle(); $('play').blur(); };   // blur, else Space also clicks it
+$('speed').addEventListener('change', e => e.target.blur());
+$('scrub').addEventListener('change', e => e.target.blur());   // so Space works after scrubbing
+$('scrub').oninput = e => {
+  const wasPlaying = playing;
+  playing = false;
+  seek(Number(e.target.value) / 1000 * DUR).then(() => {
+    playing = wasPlaying; lastWall = performance.now();
+  });
+};
+
+let busy = false;
+function tick(now){
+  requestAnimationFrame(tick);              // keep the frame loop alive regardless of I/O
+  if (playing && !busy){
+    const dt = Math.min(0.25, (now - lastWall) / 1000);
+    lastWall = now;
+    let next = curSec + dt * Number($('speed').value);
+    if (next >= DUR){ next = DUR; playing = false; $('play').textContent = '▶ Play'; }
+    busy = true;
+    advanceTo(next)                                    // don't block rendering on a fetch
+      .catch(err => { console.error('advance failed', err); $('net').textContent = 'error'; })
+      .finally(() => { busy = false; });
+  }
+  if (now - lastRateT > 500){
+    const secs = (now - lastRateT)/1000;
+    $('s-rate').textContent = Math.round((cursor - lastCursor)/secs).toLocaleString();
+    lastCursor = cursor; lastRateT = now;
+  }
+  if (dirty){ idxTex.needsUpdate = true; resolveCanvas(); dirty = false; }
+  renderer.render(scene, camera);
+}
+
+// ---------------------------------------------------------------- go
+setBoot(.4, 'keyframe + first event window');
+fit(); resize();
+const h0 = readHash();
+await seek(h0.t ?? 0);
+if (h0.x !== null && h0.y !== null){
+  cx = h0.x; cy = h0.y;
+  if (h0.z) zoom = Math.min(40, Math.max(0.05, h0.z));
+  resize();
+  mat.uniforms.uHover.value.set(Math.floor(cx), Math.floor(cy));
+}
+setBoot(1, 'ready');
+$('boot').style.opacity = '0';
+setTimeout(() => $('boot').remove(), 450);
+requestAnimationFrame(tick);
+</script>
+</body>
+</html>
