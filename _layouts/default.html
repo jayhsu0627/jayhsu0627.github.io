@@ -231,7 +231,13 @@
           {% if cat != 'research' and cat != 'Intel' and cat != 'blog' %}
           <tr {% if post.highlight %}bgcolor="#ffffd0" {% endif %}>
             <td style="padding:2.5%;width:25%;vertical-align:middle;min-width:120px">
+              {% if post.thumb_interactive == 'place' %}
+              <canvas class="place-thumb" width="160" height="160" data-href="{{ post.website }}"
+                aria-label="{{ post.title }} — interactive preview"
+                style="width:100%;max-width:160px;aspect-ratio:1;image-rendering:pixelated;cursor:pointer;display:block;border-radius:4px;background:#ffffff;"></canvas>
+              {% else %}
               <img src="/tn{{post.image}}" alt="project image" style="width:auto; height:auto; max-width:100%;" />
+              {% endif %}
             </td>
             <td style="padding:2.5%;width:75%;vertical-align:middle">
               <h3>{{post.title}}</h3>
@@ -298,6 +304,7 @@
       </td>
     </tr>
   </table>
+  <script src="{{ site.baseurl }}/js/place-thumb.js" defer></script>
 </body>
 
 </html>

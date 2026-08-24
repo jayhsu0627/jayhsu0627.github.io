@@ -5,6 +5,7 @@ date: 2026-08-23
 image: /images/place_2022.svg
 categories: personal
 website: /projects/place-2022/
+thumb_interactive: place
 ---
 
 160M pixels. Every second of the canvas, seekable.
