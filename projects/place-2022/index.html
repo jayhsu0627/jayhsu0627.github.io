@@ -129,6 +129,21 @@ const $ = id => document.getElementById(id);
 const bootf = $('bootf'), bootm = $('bootm');
 const setBoot = (p, m) => { bootf.style.width = (p*100)+'%'; if (m) bootm.textContent = m; };
 
+// Capture view from URL before any await (hash can be clobbered during long seek)
+let booting = true;
+function captureViewFromUrl(){
+  const num = (q, k) => q.has(k) && isFinite(+q.get(k)) ? +q.get(k) : null;
+  const search = new URLSearchParams(location.search);
+  if (search.has('x') || search.has('y') || search.has('z') || search.has('t'))
+    return { x: num(search,'x'), y: num(search,'y'), z: num(search,'z'), t: num(search,'t') };
+  if (location.hash.length > 1){
+    const hash = new URLSearchParams(location.hash.slice(1));
+    return { x: num(hash,'x'), y: num(hash,'y'), z: num(hash,'z'), t: num(hash,'t') };
+  }
+  return { x: null, y: null, z: null, t: null };
+}
+const INITIAL_VIEW = captureViewFromUrl();
+
 // ---------------------------------------------------------------- data
 // R2 by default (site preview + production). Local pipeline: serve.py on :8787 → ./data.
 // Override: ?data=https://… or ?data=data
@@ -270,7 +285,7 @@ function resize(){
   camera.position.set(cx - W/2, -(cy - H/2), 1);
   camera.updateProjectionMatrix();
   mat.uniforms.uInvZoom.value = 1 / zoom;
-  syncHash();
+  syncUrl();
   $('s-zoom').textContent = 'zoom ' + zoom.toFixed(zoom < 1 ? 2 : 1) + '×';
 }
 addEventListener('resize', resize);
@@ -354,22 +369,24 @@ function pagePath(){
   const p = location.pathname.replace(/\/index\.html$/, '');
   return (p.endsWith('/') ? p : p + '/') || '/';
 }
-function viewHash(){
-  return `#x=${Math.round(cx)}&y=${Math.round(cy)}&z=${+zoom.toFixed(3)}&t=${Math.round(curSec)}`;
+function viewQuery(){
+  const q = new URLSearchParams();
+  q.set('x', Math.round(cx));
+  q.set('y', Math.round(cy));
+  q.set('z', +zoom.toFixed(3));
+  q.set('t', Math.round(curSec));
+  const data = new URLSearchParams(location.search).get('data');
+  if (data) q.set('data', data);
+  return '?' + q.toString();
 }
-function shareUrl(){ return location.origin + pagePath() + viewHash(); }
-let hashAt = 0, booting = true;
-function syncHash(){                                  // throttled; replaceState avoids hashchange
+function shareUrl(){ return location.origin + pagePath() + viewQuery(); }
+let urlAt = 0;
+function syncUrl(){
   if (booting) return;
   const t = performance.now();
-  if (t - hashAt < 1000) return;   // browsers rate-limit replaceState
-  hashAt = t;
-  try { history.replaceState(null, '', pagePath() + viewHash()); } catch (_) {}
-}
-function readHash(){
-  const q = new URLSearchParams(location.hash.slice(1));
-  const num = k => q.has(k) && isFinite(+q.get(k)) ? +q.get(k) : null;
-  return { x: num('x'), y: num('y'), z: num('z'), t: num('t') };
+  if (t - urlAt < 1000) return;
+  urlAt = t;
+  try { history.replaceState(null, '', pagePath() + viewQuery()); } catch (_) {}
 }
 function applyView(h){
   if (h.x !== null && h.y !== null){ cx = h.x; cy = h.y; }
@@ -532,7 +549,7 @@ function updateHud(){
   $('clock').textContent = d.toISOString().replace('T',' ').slice(0,19) + 'Z';
   $('s-count').textContent = cursor.toLocaleString();
   $('scrub').value = String(Math.round(curSec / DUR * 1000));
-  syncHash();
+  syncUrl();
 }
 
 let lastWall = 0, lastCursor = 0, lastRateT = 0;
@@ -576,16 +593,16 @@ function tick(now){
 
 // ---------------------------------------------------------------- go
 setBoot(.4, 'keyframe + first event window');
-const h0 = readHash();                                 // read before fit/syncHash can clobber hash
+const h0 = INITIAL_VIEW;
 applyView(h0);
 resize();
 await seek(h0.t ?? 0);
-applyView(h0);                                         // seek's syncHash may have used fit() camera
+applyView(h0);
 resize();
 if (h0.x !== null && h0.y !== null)
   mat.uniforms.uHover.value.set(Math.floor(h0.x), Math.floor(h0.y));
 booting = false;
-syncHash();
+syncUrl();
 setBoot(1, 'ready');
 $('boot').style.opacity = '0';
 setTimeout(() => $('boot').remove(), 450);
