@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "From Geometry to Causality: How Instruction Exposure Wires Up Latent Rhetorical Directions in LLMs"
+title:  "From Geometry to Behavior: How Instruction Exposure Unlocks Latent Rhetorical Directions in LLMs"
 date:   2026-07-08 22:21:59 +00:00
 image: /images/local_llm_claude.png
 categories: research

@@ -513,6 +513,46 @@ pre.bibtex {
   pointer-events: none;
 }
 
+.try-me {
+  display: inline-flex;
+  align-items: center;
+  margin: 10px 4px 6px;
+  padding: 0.4rem 0.95rem 0.45rem;
+  background: #ffe56a;
+  color: #1a1a1a;
+  font-family: 'Google Sans', sans-serif;
+  font-weight: 700;
+  font-size: 1.05rem;
+  line-height: 1.2;
+  letter-spacing: 0.01em;
+  border: 3px solid #1a1a1a;
+  border-radius: 999px;
+  box-shadow: 3px 3px 0 #1a1a1a;
+  transform: rotate(-7deg);
+  text-decoration: none;
+  animation: try-me-bob 2.6s ease-in-out infinite;
+}
+
+.try-me:hover {
+  color: #1a1a1a;
+  transform: rotate(-2deg) translateY(-2px);
+  box-shadow: 4px 5px 0 #1a1a1a;
+}
+
+.try-me:focus-visible {
+  outline: 3px solid var(--cb-blue);
+  outline-offset: 3px;
+}
+
+@keyframes try-me-bob {
+  0%, 100% { transform: rotate(-7deg) translateY(0); }
+  50% { transform: rotate(-7deg) translateY(-4px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .try-me { animation: none; }
+}
+
 /* ---- Embedded 3D PCA explorer ---- */
 .explorer-wrap {
   max-width: 1100px;
