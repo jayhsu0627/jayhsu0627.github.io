@@ -8,7 +8,7 @@ author: "Shengjie Xu"
 authors: "<strong>Shengjie Xu</strong>"
 venue: "COLM"
 paper: https://arxiv.org/abs/2610.37685
-code: "#"
+code: https://github.com/jayhsu0627/analogy-vector
 website: /conferences/2026_COLM_analogy-vector/
 emoji: /images/emojis/donnie_ninja-turtle.png
 highlight: true
