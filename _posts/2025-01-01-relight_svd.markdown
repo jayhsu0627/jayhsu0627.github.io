@@ -8,7 +8,7 @@ author: "Shengjie Xu"
 authors: "<strong>Shengjie Xu</strong>, Alexander Gao, Anshul Rai, Dae Yeol Lee, Guan-Ming Su, Ming C. Lin"
 venue: "IROS"
 paper: https://arxiv.org/abs/2611.17438
-code: https://github.com/jayhsu0627/Wolverine_CARLA_Thunderhill
+code: https://github.com/jayhsu0627/neural_relight_sensor
 website: /conferences/2026_IROS_neural-sensor/
 video: /conferences/2026_IROS_neural-sensor/#video
 emoji: /images/emojis/mikey_ninja-turtle.png
