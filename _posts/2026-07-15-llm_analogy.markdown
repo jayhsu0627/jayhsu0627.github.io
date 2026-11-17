@@ -7,7 +7,7 @@ categories: research
 author: "Shengjie Xu"
 authors: "<strong>Shengjie Xu</strong>"
 venue: "COLM"
-arxiv: https://arxiv.org/abs/2610.37685
+paper: https://arxiv.org/abs/2610.37685
 code: "#"
 website: /conferences/2026_COLM_analogy-vector/
 emoji: /images/emojis/donnie_ninja-turtle.png

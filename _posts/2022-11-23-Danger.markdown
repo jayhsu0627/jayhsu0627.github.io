@@ -8,7 +8,7 @@ author: "Shengjie Xu"
 subtitle: "Invited Workshop Talk"
 venue: "NeurIPS Workshops"
 authors: "<strong>Shengjie Xu</strong>, Lan Mi, Leilani H. Gilpin"
-arxiv: /pdfs/NeurIPS_TEA_Danger.pdf
+paper: /pdfs/NeurIPS_TEA_Danger.pdf
 code: https://github.com/jayhsu0627/DANGER
 website: https://sites.google.com/view/danger-vkitti/home
 slides: https://neurips.cc/virtual/2022/59954

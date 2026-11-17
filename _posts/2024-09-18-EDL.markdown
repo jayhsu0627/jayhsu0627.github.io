@@ -7,7 +7,7 @@ categories: research
 author: "Shengjie Xu"
 authors: "Alexander Gao, Xijun Wang, Geonsun Lee, Will William Barber Smith Chambers, Niall L. Williams, Yi-Ling Qiao, <strong>Shengjie Xu</strong>, Ming C. Lin"
 venue: "IEEE Virtual Reality"
-arxiv:
+paper: https://ieeexplore.ieee.org/document/10972705/
 code:
 website: 
 highlight: false
